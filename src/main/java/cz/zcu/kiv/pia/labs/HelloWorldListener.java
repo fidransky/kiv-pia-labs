@@ -1,5 +1,7 @@
 package cz.zcu.kiv.pia.labs;
 
+import org.slf4j.Logger;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestEvent;
@@ -9,8 +11,11 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 @WebListener
 public class HelloWorldListener implements ServletContextListener, ServletRequestListener {
+    private static final Logger LOG = getLogger(HelloWorldListener.class);
     private static final String REQUEST_START_ATTRIBUTE_NAME = "requestStartedDateTime";
 
     @Override
@@ -31,6 +36,6 @@ public class HelloWorldListener implements ServletContextListener, ServletReques
         final var now = LocalDateTime.now();
 
         final var millis = ChronoUnit.MILLIS.between(started, now);
-        System.out.println("Request took " + millis + " ms.");
+        LOG.info("Request took " + millis + " ms.");
     }
 }
