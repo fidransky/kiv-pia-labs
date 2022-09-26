@@ -1,5 +1,6 @@
 package cz.zcu.kiv.pia.labs;
 
+import cz.zcu.kiv.pia.labs.number.NumberService;
 import org.slf4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,12 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class HelloWorldController {
 
     private static final Logger LOG = getLogger(HelloWorldController.class);
+
+    private final NumberService numberService;
+
+    public HelloWorldController(NumberService randomNumberService) {
+        this.numberService = randomNumberService;
+    }
 
     @GetMapping(path = "/hello", produces = MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
     public String sayHello(@RequestParam String from) {
@@ -32,5 +39,10 @@ public class HelloWorldController {
     @GetMapping(path = "/greet/{name}", produces = MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
     public String greet(@PathVariable String name) {
         return "<h1>Hello " + name + "!</h1>";
+    }
+
+    @GetMapping("/number")
+    public String getRandomNumber() {
+        return numberService.getNumber().toString();
     }
 }
