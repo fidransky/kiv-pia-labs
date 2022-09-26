@@ -1,4 +1,4 @@
-package cz.zcu.kiv.pia.labs.chat.converter;
+package cz.zcu.kiv.pia.labs.chat.converter.rest;
 
 import cz.zcu.kiv.pia.labs.chat.domain.Message;
 import cz.zcu.kiv.pia.labs.chat.rest.model.MessageVO;
