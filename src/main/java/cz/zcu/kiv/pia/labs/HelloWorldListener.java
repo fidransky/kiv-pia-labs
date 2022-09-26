@@ -20,8 +20,8 @@ public class HelloWorldListener implements ServletContextListener, ServletReques
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        sce.getServletContext().setRequestCharacterEncoding(StandardCharsets.UTF_8.name());
-        sce.getServletContext().setResponseCharacterEncoding(StandardCharsets.UTF_8.name());
+        //sce.getServletContext().setRequestCharacterEncoding(StandardCharsets.UTF_8.name());
+        //sce.getServletContext().setResponseCharacterEncoding(StandardCharsets.UTF_8.name());
     }
 
     @Override
