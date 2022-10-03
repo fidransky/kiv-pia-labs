@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
+            <artifactId>spring-webflux</artifactId>
             <version>5.3.22</version>
         </dependency>
         <dependency>
