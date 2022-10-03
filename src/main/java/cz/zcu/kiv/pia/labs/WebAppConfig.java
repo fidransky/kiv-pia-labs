@@ -44,8 +44,7 @@ public class WebAppConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    @RequestScope
-    public NumberService constantNumberService(RandomGenerator randomGenerator) {
-        return new ConstantNumberService(randomGenerator.nextLong());
+    public NumberService constantNumberService() {
+        return new ConstantNumberService(666L);
     }
 }
