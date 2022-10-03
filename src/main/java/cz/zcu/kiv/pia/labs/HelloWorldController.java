@@ -19,8 +19,8 @@ public class HelloWorldController {
 
     private final NumberService numberService;
 
-    public HelloWorldController(NumberService randomNumberService) {
-        this.numberService = randomNumberService;
+    public HelloWorldController(NumberService constantNumberService) {
+        this.numberService = constantNumberService;
     }
 
     @GetMapping(path = "/hello", produces = MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
