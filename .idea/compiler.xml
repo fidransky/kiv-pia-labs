@@ -6,7 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="pia-labs" />
+        <module name="pia-labs-core" />
+        <module name="pia-labs-web" />
       </profile>
     </annotationProcessing>
   </component>
