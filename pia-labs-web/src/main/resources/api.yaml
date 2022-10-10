@@ -1,0 +1,342 @@
+# Example OpenAPI definition
+---
+openapi: 3.0.3
+info:
+  title: KIV/PIA Labs REST API
+  version: 1.0.0
+  description: REST API specification for the KIV/PIA Labs project.
+
+servers:
+  - url: http://localhost:8080
+
+# Tags are used to group endpoints. There can be multiple tags per endpoint,
+# the first tag determines the interface (in case of Java) defining this endpoint
+# in the generated code.
+tags:
+  - name: Rooms
+    description: Chat rooms management
+  - name: Messages
+    description: Chat room messages management
+  - name: Users
+    description: Users management
+
+# Components referenced from the endpoints. There are several groups
+# of components - we are using parameters, responses and schemas here,
+# but there are also others (securitySchemes, headers, links, ...)
+components:
+  # The actual definitions of parameters referenced below.
+  # Note that we are describing their features here, but the actual
+  # data type is being referenced further. This time we do it to reuse
+  # the data types in other places. It is also good practice to have
+  # them all defined in the schemas part of the components definition.
+  parameters:
+    RoomIdPathParam:
+      name: roomId
+      in: path
+      description: Unique chat room ID.
+      required: true
+      schema:
+        $ref: "#/components/schemas/RoomId"
+
+  # Request bodies for requests that can contain a body (usually POST and PUT).
+  requestBodies:
+    CreateUserRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserVO"
+    CreateRoomRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RoomVO"
+    CreateMessageRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/MessageVO"
+
+  # Response definitions
+  responses:
+    RoomNotFound:
+      description: When chat room with given ID cannot be found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/ProblemVO"
+
+  # Finally, definitions of the actual objects referenced in the aforementioned
+  # parts are defined here.
+  schemas:
+    # Note that individual properties can have various constrains (maximum length,
+    # regex pattern, ...), they can be marked as read-only, required etc.
+    UserVO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          example: 123
+        username:
+          type: string
+          maxLength: 20
+          description: User's unique username
+          example: john.doe
+      required:
+        - username
+
+    RoomId:
+      type: string
+      format: uuid
+
+    # Objects can be composed of other objects by using references instead of
+    # schema definition.
+    RoomVO:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/RoomId"
+          readOnly: true
+          example: 456
+        name:
+          type: string
+          description: Chat room name
+          example: "running"
+        administrator:
+          $ref: "#/components/schemas/UserVO"
+          readOnly: true
+      required:
+        - name
+
+    MessageVO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          example: 789
+        author:
+          $ref: "#/components/schemas/UserVO"
+          readOnly: true
+        text:
+          type: string
+          maxLength: 140
+          example: "Morning run tomorrow, who's coming along?"
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+        - text
+
+    # Generic VO used to describe errors, compliant with RFC 7807 spec.
+    ProblemVO:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Common problem type URL
+        title:
+          type: string
+          description: HTTP status description
+        status:
+          type: number
+          description: HTTP status code
+        detail:
+          type: string
+          description: Detailed problem description
+        instance:
+          type: string
+          description: Path where the problem occurred
+      required:
+        - title
+        - status
+        - detail
+
+# Paths are the URIs within your REST application.
+paths:
+  # It is a good practice to prefix your API with some common prefix to allow
+  # for better serviceability - security rules, load balancer configuration...
+  # We are using /v1 here, using the prefix to mark major API version.
+  /v1/rooms:
+    # The HTTP method use for this endpoint (operation in OpenAPI terminology).
+    get:
+      # Computer readable identification of the endpoint.
+      # It usually translates directly to a method name in the generated code.
+      operationId: ListRooms
+      # Short human-readable description user as a title in the generated docs.
+      summary: List Rooms
+      # Full-blown human-readable description meant purely for documentation purposes.
+      description: Returns all chat rooms, optionally filtered by `name` query parameter.
+      # See tags above for explanation.
+      # Combination of this tag and the operationId defined above means this operation
+      # will be represented by the UsersApi.createUser method in the generated code.
+      tags:
+        - Rooms
+      # Example of query parameters (passed as GET/POST parameters). This is here to
+      # enable filtering. Another common use is paging of listed results (in case of
+      # list operations).
+      parameters:
+        - name: name
+          in: query
+          description: Chat room name.
+          required: false
+          schema:
+            type: string
+          example: default
+      responses:
+        # This part should cover all possible server responses and their respective
+        # data structures.
+        200:
+          description: When chat rooms are successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RoomVO"
+        400:
+          description: When query parameters are invalid.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemVO"
+    post:
+      operationId: CreateRoom
+      description: Creates a new chat room.
+      tags:
+        - Rooms
+      # Request body references the CreateUserRequest component defined above.
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/CreateRoomRequest"
+      responses:
+        201:
+          description: When chat room is successfully created.
+          headers:
+            Created:
+              description: URL to the newly created chat room's details.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoomVO"
+        400:
+          description: When request is invalid.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemVO"
+  # Note the part in curly braces which marks the presence of a path parameter.
+  # In the real URI it is replaced by the parameter's value in the form defined
+  # by the referenced type. Take a look at the generated RoomsApi interface.
+  /v1/rooms/{roomId}:
+    get:
+      operationId: GetRoom
+      description: Returns chat room details.
+      tags:
+        - Rooms
+      parameters:
+        - $ref: "#/components/parameters/RoomIdPathParam"
+      responses:
+        200:
+          description: When chat room details are successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoomVO"
+        404:
+          $ref: "#/components/responses/RoomNotFound"
+  /v1/rooms/{roomId}/users:
+    get:
+      operationId: GetRoomUsers
+      description: Returns chat room users.
+      tags:
+        - Users
+      parameters:
+        - $ref: "#/components/parameters/RoomIdPathParam"
+      responses:
+        200:
+          description: When chat room users are successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserVO"
+        404:
+          $ref: "#/components/responses/RoomNotFound"
+  /v1/rooms/{roomId}/messages:
+    get:
+      operationId: GetRoomMessages
+      description: Returns chat room messages.
+      tags:
+        - Messages
+      parameters:
+        - $ref: "#/components/parameters/RoomIdPathParam"
+      responses:
+        200:
+          description: When chat room messages are successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MessageVO"
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/MessageVO"
+        404:
+          $ref: "#/components/responses/RoomNotFound"
+    post:
+      operationId: SendMessage
+      description: Sends a new message to the chat room.
+      tags:
+        - Messages
+      parameters:
+        - $ref: "#/components/parameters/RoomIdPathParam"
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/CreateMessageRequest"
+      responses:
+        201:
+          description: When message is successfully sent to the chat room.
+        400:
+          description: When request is invalid.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemVO"
+        404:
+          $ref: "#/components/responses/RoomNotFound"
+  /v1/users:
+    post:
+      operationId: CreateUser
+      description: Creates a new user.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/CreateUserRequest"
+      responses:
+        201:
+          description: When user is successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserVO"
+        400:
+          description: When request is invalid.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemVO"
+        409:
+          description: When user with given name already exists.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemVO"
