@@ -15,11 +15,11 @@ public class WebApp {
         tomcat.getConnector(); // create the default connector
 
         // create "pia-labs" servlet context
-        Context context = tomcat.addWebapp("/pia-labs", new File("src/main/webapp/").getAbsolutePath());
+        Context context = tomcat.addWebapp("/pia-labs", new File("pia-labs-web/src/main/webapp/").getAbsolutePath());
 
         // make Tomcat use compiled classes
         WebResourceRoot resources = new StandardRoot(context);
-        resources.addPreResources(new DirResourceSet(resources, "/WEB-INF/classes", new File("target/classes").getAbsolutePath(), "/"));
+        resources.addPreResources(new DirResourceSet(resources, "/WEB-INF/classes", new File("pia-labs-web/target/classes").getAbsolutePath(), "/"));
         context.setResources(resources);
 
         tomcat.start();
