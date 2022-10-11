@@ -9,7 +9,7 @@ Each topic has its own wiki page.
 1. [Intro](https://github.com/fidransky/kiv-pia-labs/wiki/Intro) (20.9.)
 2. [Servlets](https://github.com/fidransky/kiv-pia-labs/wiki/Servlets) (27.9.)
 3. [IoC, DI, Spring](https://github.com/fidransky/kiv-pia-labs/wiki/IoC,-DI,-Spring) (4.10.)
-4. WS API - REST (11.10.)
+4. [WS API - REST](https://github.com/fidransky/kiv-pia-labs/wiki/WS-API---REST) (11.10.)
 5. WS API - GraphQL (18.10.)
 6. UI - server-side (25.10.)
 7. UI - client-side (1.11.)
