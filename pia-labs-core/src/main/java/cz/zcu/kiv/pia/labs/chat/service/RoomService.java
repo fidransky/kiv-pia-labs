@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Service
 public class RoomService {
-    public static final Room DEFAULT_ROOM = new Room("default", new User("john.doe"));
+    public static final Room DEFAULT_ROOM = new Room("default", UserService.DEFAULT_USER);
 
     private final RoomRepository roomRepository;
 
