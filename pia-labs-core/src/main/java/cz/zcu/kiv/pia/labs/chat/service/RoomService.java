@@ -88,10 +88,9 @@ public class RoomService {
      * @param user User joining chat room
      * @return Void
      */
-    public Mono<Void> joinRoom(UUID id, User user) {
+    public Mono<Room> joinRoom(UUID id, User user) {
         return roomRepository.findById(id)
-                .doOnNext(room -> room.join(user))
-                .then();
+                .doOnNext(room -> room.join(user));
     }
 
     /**

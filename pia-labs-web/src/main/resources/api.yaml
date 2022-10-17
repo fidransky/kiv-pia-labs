@@ -269,6 +269,27 @@ paths:
                   $ref: "#/components/schemas/UserVO"
         404:
           $ref: "#/components/responses/RoomNotFound"
+    post:
+      operationId: JoinRoom
+      description: Join the chat room as the authenticated user.
+      tags:
+        - Users
+      parameters:
+        - $ref: "#/components/parameters/RoomIdPathParam"
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/CreateUserRequest"
+      responses:
+        201:
+          description: When user has successfully joined the chat room.
+        400:
+          description: When request is invalid.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemVO"
+        404:
+          $ref: "#/components/responses/RoomNotFound"
   /v1/rooms/{roomId}/messages:
     get:
       operationId: GetRoomMessages

@@ -1,5 +1,6 @@
 package cz.zcu.kiv.pia.labs.chat.controller;
 
+import cz.zcu.kiv.pia.labs.chat.domain.User;
 import cz.zcu.kiv.pia.labs.chat.rest.api.UsersApi;
 import cz.zcu.kiv.pia.labs.chat.rest.model.UserVO;
 import cz.zcu.kiv.pia.labs.chat.service.RoomService;
@@ -41,5 +42,13 @@ public class UserController implements UsersApi {
                 .block();
 
         return ResponseEntity.ok(result);
+    }
+
+    @Override
+    public ResponseEntity<Void> joinRoom(UUID roomId, UserVO userVO) {
+        roomService.joinRoom(roomId, conversionService.convert(userVO, User.class))
+                .subscribe();
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
