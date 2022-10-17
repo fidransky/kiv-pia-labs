@@ -4,7 +4,14 @@ openapi: 3.0.3
 info:
   title: KIV/PIA Labs REST API
   version: 1.0.0
-  description: REST API specification for the KIV/PIA Labs project.
+  description: |
+    REST API specification for the KIV/PIA Labs project.
+    
+    Export HTML docs using [redoc-cli](https://github.com/Redocly/redoc):
+    
+    ```sh
+    npx redoc-cli build api.yaml -o api.html
+    ```
 
 servers:
   - url: http://localhost:8080
