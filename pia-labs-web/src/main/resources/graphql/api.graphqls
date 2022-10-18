@@ -1,0 +1,76 @@
+# Scalars represent leaves of a query. Except for the default ones (Int, Float, String, Boolean, ID), we can define our own.
+scalar DateTime
+
+type UserVO {
+    # Non-nullable UUID.
+    id: ID!
+    """
+    User's unique username
+    """
+    username: String!
+}
+
+type RoomVO {
+    id: ID!
+    """
+    Chat room name
+    """
+    name: String!
+    """
+    User who manages this chat room
+    """
+    administrator: UserVO!
+    """
+    Users who joined this chat room
+    """
+    # Nullable array of non-nullable items.
+    users: [UserVO!]
+    """
+    Messages sent to this chat room
+    """
+    messages: [MessageVO!]
+}
+
+type MessageVO {
+    id: ID!
+    author: UserVO!
+    text: String!
+    timestamp: DateTime!
+}
+
+type Query {
+    """
+    Returns chat room details.
+    """
+    getRoom(id: ID!): RoomVO!
+    """
+    Returns all chat rooms, optionally filtered by `name` argument.
+    """
+    listRooms(name: String): [RoomVO!]
+}
+
+type Mutation {
+    """
+    Creates a new user.
+    """
+    createUser(username: String!): UserVO!
+    """
+    Creates a new chat room.
+    """
+    createRoom(name: String!): RoomVO!
+    """
+    Join the chat room as the authenticated user.
+    """
+    joinRoom(roomId: ID!): RoomVO!
+    """
+    Sends a new message to the chat room.
+    """
+    sendMessage(roomId: ID!, text: String!): RoomVO!
+}
+
+type Subscription {
+    """
+    Streams new messages as they are sent to the chat room.
+    """
+    streamRoomMessages(roomId: ID!): MessageVO!
+}
