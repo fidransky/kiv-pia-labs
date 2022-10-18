@@ -32,6 +32,10 @@
             <artifactId>spring-webflux</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.graphql</groupId>
+            <artifactId>spring-graphql</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
         </dependency>
@@ -58,6 +62,10 @@
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.graphql-java-generator</groupId>
+            <artifactId>graphql-java-common-runtime</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -111,6 +119,29 @@
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.graphql-java-generator</groupId>
+                <artifactId>graphql-maven-plugin</artifactId>
+                <version>${graphql.version}</version>
+                <configuration>
+                    <mode>server</mode>
+                    <packageName>cz.zcu.kiv.pia.labs.chat.graphql</packageName>
+                    <schemaFileFolder>${project.basedir}/src/main/resources/graphql</schemaFileFolder>
+                    <!-- The parameters below change the 1.x default behavior. They are set to respect the behavior of the future 2.x versions -->
+                    <copyRuntimeSources>false</copyRuntimeSources>
+                    <generateBatchLoaderEnvironment>true</generateBatchLoaderEnvironment>
+                    <separateUtilityClasses>true</separateUtilityClasses>
+                    <skipGenerationIfSchemaHasNotChanged>true</skipGenerationIfSchemaHasNotChanged>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generatePojo</goal>
                         </goals>
                     </execution>
                 </executions>
