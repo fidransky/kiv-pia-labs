@@ -68,6 +68,10 @@
             <artifactId>graphql-java-common-runtime</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java-extended-scalars</artifactId>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
@@ -136,6 +140,13 @@
                     <generateBatchLoaderEnvironment>true</generateBatchLoaderEnvironment>
                     <separateUtilityClasses>true</separateUtilityClasses>
                     <skipGenerationIfSchemaHasNotChanged>true</skipGenerationIfSchemaHasNotChanged>
+                    <customScalars>
+                        <customScalar>
+                            <graphQLTypeName>DateTime</graphQLTypeName>
+                            <javaType>java.time.OffsetDateTime</javaType>
+                            <graphQLScalarTypeStaticField>graphql.scalars.ExtendedScalars.DateTime</graphQLScalarTypeStaticField>
+                        </customScalar>
+                    </customScalars>
                 </configuration>
                 <executions>
                     <execution>

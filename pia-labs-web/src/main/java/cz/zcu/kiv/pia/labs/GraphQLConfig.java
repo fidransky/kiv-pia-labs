@@ -1,15 +1,13 @@
 package cz.zcu.kiv.pia.labs;
 
+import graphql.scalars.ExtendedScalars;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.graphql.ExecutionGraphQlService;
 import org.springframework.graphql.data.method.annotation.support.AnnotatedControllerConfigurer;
-import org.springframework.graphql.execution.BatchLoaderRegistry;
-import org.springframework.graphql.execution.DefaultBatchLoaderRegistry;
-import org.springframework.graphql.execution.DefaultExecutionGraphQlService;
-import org.springframework.graphql.execution.GraphQlSource;
+import org.springframework.graphql.execution.*;
 import org.springframework.graphql.server.WebGraphQlHandler;
 import org.springframework.graphql.server.webflux.GraphQlHttpHandler;
 import org.springframework.graphql.server.webflux.GraphiQlHandler;
@@ -33,10 +31,16 @@ public class GraphQLConfig {
     }
 
     @Bean
-    public GraphQlSource graphQlSource(AnnotatedControllerConfigurer annotatedControllerConfigurer) {
+    public RuntimeWiringConfigurer runtimeWiringConfigurer() {
+        return wiringBuilder -> wiringBuilder.scalar(ExtendedScalars.DateTime);
+    }
+
+    @Bean
+    public GraphQlSource graphQlSource(AnnotatedControllerConfigurer annotatedControllerConfigurer, RuntimeWiringConfigurer runtimeWiringConfigurer) {
         return GraphQlSource.schemaResourceBuilder()
                 .schemaResources(schema)
                 .configureRuntimeWiring(annotatedControllerConfigurer)
+                .configureRuntimeWiring(runtimeWiringConfigurer)
                 .build();
     }
 
