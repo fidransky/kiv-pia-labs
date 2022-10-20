@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html(title='Chat rooms')}">
+<head>
+    <title>Create chat room</title>
+</head>
+<body>
+<section layout:fragment="content" class="my-3">
+    <div class="row justify-content-sm-center">
+        <div class="col-sm-7 col-md-6 col-lg-5 col-xl-4">
+            <h1 class="h3 mb-4">Create a new chat room</h1>
+
+            <form method="post" th:action="@{/room/create}" th:object="${roomVO}">
+                <div class="mb-3">
+                    <label for="roomName" class="form-label">Chat room name</label>
+                    <input type="text" th:field="*{name}" class="form-control" id="roomName" required autofocus>
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>
