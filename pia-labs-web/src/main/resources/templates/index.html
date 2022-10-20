@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html(title='Chat rooms')}">
+<head>
+    <title>Chat rooms</title>
+</head>
+<body>
+    <section layout:fragment="content" class="my-3">
+        <div class="row justify-content-md-center">
+            <div class="col-sm-7 col-md-6 col-lg-5 col-xl-4">
+                <h1 class="h3 mb-4">Join a chat room</h1>
+
+                <div th:if="${#lists.isEmpty(rooms)}" class="alert alert-warning" role="alert">
+                    No chat rooms were found for query <q th:text="${query}"></q>.
+                </div>
+
+                <div th:each="room : ${rooms}" class="d-flex flex-row align-items-center py-3 border-bottom">
+                    <strong th:text="${room.name}"></strong>
+                    <span class="ms-2 badge bg-secondary" th:text="${room.messages.size}"></span>
+                    <a th:href="@{/room/{roomId}(roomId=${room.id})}" class="ms-auto btn btn-outline-primary">Join</a>
+                </div>
+
+                <div class="text-center mt-3">
+                    <a th:href="@{/room/create}" class="btn btn-primary btn-lg">Create a new chat room</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
