@@ -4,16 +4,15 @@ import cz.zcu.kiv.pia.labs.number.reactive.ReactiveNumberService;
 import org.slf4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import reactor.core.publisher.Mono;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Controller
-@ResponseBody
 public class HelloWorldController {
 
     private static final Logger LOG = getLogger(HelloWorldController.class);
@@ -24,8 +23,8 @@ public class HelloWorldController {
         this.numberService = randomNumberService;
     }
 
-    @GetMapping(path = "/hello", produces = MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
-    public Mono<String> sayHello(@RequestParam String from) {
+    @GetMapping("/hello")
+    public Mono<String> sayHello(@RequestParam String from, Model model) {
         var builder = new StringBuilder("Hello World");
         if (from != null) {
             builder.append(" from ").append(from);
@@ -34,7 +33,8 @@ public class HelloWorldController {
 
         LOG.info(builder.toString());
 
-        return Mono.just("<h1>" + builder + "</h1>");
+        model.addAttribute("greeting", builder);
+        return Mono.just("greeting");
     }
 
     @GetMapping(path = "/greet/{name}", produces = MediaType.TEXT_HTML_VALUE + "; charset=utf-8")
