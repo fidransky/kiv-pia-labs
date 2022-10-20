@@ -1,4 +1,4 @@
-package cz.zcu.kiv.pia.labs.chat.converter.graphql;
+package cz.zcu.kiv.pia.labs.chat.graphql.converter;
 
 import cz.zcu.kiv.pia.labs.chat.domain.User;
 import cz.zcu.kiv.pia.labs.chat.graphql.UserVO;

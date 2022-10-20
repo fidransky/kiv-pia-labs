@@ -1,4 +1,4 @@
-package cz.zcu.kiv.pia.labs.chat.controller;
+package cz.zcu.kiv.pia.labs.chat.graphql.controller;
 
 import cz.zcu.kiv.pia.labs.chat.domain.Message;
 import cz.zcu.kiv.pia.labs.chat.graphql.MessageVO;

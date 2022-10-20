@@ -1,6 +1,6 @@
-package cz.zcu.kiv.pia.labs.chat.converter;
+package cz.zcu.kiv.pia.labs.chat.graphql;
 
-import cz.zcu.kiv.pia.labs.chat.converter.graphql.*;
+import cz.zcu.kiv.pia.labs.chat.graphql.converter.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
