@@ -11,7 +11,7 @@ Each topic has its own wiki page.
 3. [IoC, DI, Spring](https://github.com/fidransky/kiv-pia-labs/wiki/IoC,-DI,-Spring) (4.10.)
 4. [WS API - REST](https://github.com/fidransky/kiv-pia-labs/wiki/WS-API---REST) (11.10.)
 5. [WS API - GraphQL](https://github.com/fidransky/kiv-pia-labs/wiki/WS-API---GraphQL) (18.10.)
-6. UI - server-side (25.10.)
+6. [UI - server-side](https://github.com/fidransky/kiv-pia-labs/wiki/UI---server-side) (25.10.)
 7. UI - client-side (1.11.)
 8. Messaging (8.11.)
 9. Security (15.11.)
