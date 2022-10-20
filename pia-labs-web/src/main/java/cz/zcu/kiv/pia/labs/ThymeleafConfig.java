@@ -1,5 +1,6 @@
 package cz.zcu.kiv.pia.labs;
 
+import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
@@ -43,6 +44,7 @@ public class ThymeleafConfig implements WebFluxConfigurer {
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setTemplateEngineMessageSource(messageSource);
         templateEngine.setEnableSpringELCompiler(true);
+        templateEngine.addDialect(new LayoutDialect()); // add the ability to decorate templates
         return templateEngine;
     }
 
