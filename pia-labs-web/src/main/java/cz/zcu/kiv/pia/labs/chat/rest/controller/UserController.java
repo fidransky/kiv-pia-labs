@@ -1,4 +1,4 @@
-package cz.zcu.kiv.pia.labs.chat.controller;
+package cz.zcu.kiv.pia.labs.chat.rest.controller;
 
 import cz.zcu.kiv.pia.labs.chat.domain.User;
 import cz.zcu.kiv.pia.labs.chat.rest.api.UsersApi;
