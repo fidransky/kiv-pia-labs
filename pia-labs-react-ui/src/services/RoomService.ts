@@ -1,6 +1,8 @@
 import { Configuration, MessagesApi, MessageVO, RoomsApi } from "pia-labs-typescript-client";
+import * as GraphQLMappers from "../mappers/GraphQLMappers";
 import * as RestMappers from "../mappers/RestMappers";
 import { Message, Room } from "../types";
+import * as GraphQLClient from "./GraphQLClient";
 
 const basePath = 'http://localhost:8080/pia-labs/spring';
 const configuration = new Configuration({ basePath });
@@ -8,8 +10,8 @@ const roomsApi = new RoomsApi(configuration);
 const messagesApi = new MessagesApi(configuration);
 
 export async function searchRooms(name: string | undefined): Promise<Room[]> {
-    return roomsApi.listRooms({ name })
-        .then((roomVOs) => roomVOs.map(RestMappers.mapRoom_fromVO));
+    return GraphQLClient.searchRooms({ name })
+        .then((roomVOs) => roomVOs.map(GraphQLMappers.mapRoom_fromVO));
 }
 
 export async function createRoom(name: string): Promise<Room> {
