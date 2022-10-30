@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
+import CreateRoom from "./components/CreateRoom";
 import Index from "./components/Index";
 
 const router = createBrowserRouter([
@@ -10,6 +11,15 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Index/>,
+            },
+            {
+                path: 'room',
+                children: [
+                    {
+                        path: 'create',
+                        element: <CreateRoom/>,
+                    },
+                ],
             },
         ],
     },
