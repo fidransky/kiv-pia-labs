@@ -24,11 +24,11 @@ type RoomVO {
     Users who joined this chat room
     """
     # Nullable array of non-nullable items.
-    users: [UserVO!]
+    users: [UserVO!]!
     """
     Messages sent to this chat room
     """
-    messages: [MessageVO!]
+    messages: [MessageVO!]!
 }
 
 type MessageVO {
@@ -46,7 +46,7 @@ type Query {
     """
     Returns all chat rooms, optionally filtered by `name` argument.
     """
-    listRooms(name: String): [RoomVO!]
+    listRooms(name: String): [RoomVO!]!
 }
 
 type Mutation {
