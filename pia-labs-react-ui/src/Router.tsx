@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import CreateRoom from "./components/CreateRoom";
 import Index from "./components/Index";
+import ViewRoom from "./components/ViewRoom";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
                     {
                         path: 'create',
                         element: <CreateRoom/>,
+                    },
+                    {
+                        path: ':roomId',
+                        element: <ViewRoom/>,
                     },
                 ],
             },
