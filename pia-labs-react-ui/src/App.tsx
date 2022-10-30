@@ -22,3 +22,4 @@ export default App;
 
 export const APP_NAME = 'KIV/PIA Labs';
 export const LOCALE = 'en-GB';
+export const BASE_PATH = '/pia-labs/react';

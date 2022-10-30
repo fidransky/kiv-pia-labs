@@ -1,4 +1,5 @@
 import { ActionFunctionArgs, Form, redirect } from "react-router-dom";
+import { BASE_PATH } from "../App";
 import { createRoom } from "../services/RoomService";
 
 type Props = {
@@ -11,7 +12,7 @@ export async function action({ request }: ActionFunctionArgs) {
     if (name === undefined) return;
 
     return createRoom(name)
-        .then((room) => redirect('/room/' + room.id));
+        .then((room) => redirect(BASE_PATH + '/room/' + room.id));
 }
 
 export default function CreateRoomForm(props: Props) {

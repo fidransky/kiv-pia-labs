@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "./App";
+import App, { BASE_PATH } from "./App";
 import CreateRoom from "./components/CreateRoom";
 import { action as createRoomAction } from "./components/CreateRoomForm";
 import Index, { loader as indexLoader } from "./components/Index";
@@ -39,7 +39,9 @@ const router = createBrowserRouter([
             },
         ],
     },
-]);
+], {
+    basename: BASE_PATH,
+});
 
 export default function Router() {
     return (
