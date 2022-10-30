@@ -11,6 +11,7 @@
     <modules>
         <module>pia-labs-core</module>
         <module>pia-labs-web</module>
+        <module>pia-labs-typescript-client</module>
     </modules>
 
     <properties>
