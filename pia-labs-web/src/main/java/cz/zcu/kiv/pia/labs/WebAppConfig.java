@@ -15,9 +15,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
+import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
@@ -71,5 +73,15 @@ public class WebAppConfig implements WebFluxConfigurer {
     public void configureHttpMessageCodecs(ServerCodecConfigurer configurer) {
         configurer.defaultCodecs().jackson2JsonEncoder(new Jackson2JsonEncoder(objectMapper));
         configurer.defaultCodecs().jackson2JsonDecoder(new Jackson2JsonDecoder(objectMapper));
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/v1/**")
+                .allowedOrigins("http://localhost:3000");
+
+        registry.addMapping("/graphql")
+                .allowedOrigins("http://localhost:3000")
+                .allowedMethods(HttpMethod.POST.name());
     }
 }
