@@ -1,24 +1,10 @@
-import { FormEvent } from "react";
-import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import { Form, Link, NavLink, useSearchParams } from "react-router-dom";
 
 type Props = {
 }
 
 export default function Header(props: Props) {
     const [ searchParams ] = useSearchParams();
-    const navigate = useNavigate();
-
-    function searchRooms(e: FormEvent) {
-        e.preventDefault();
-
-        const form = e.target as HTMLFormElement;
-        const query = form.q.value;
-
-        navigate({
-            pathname: '/',
-            search: new URLSearchParams({ q: query }).toString(),
-        });
-    }
 
     return (
         <header>
@@ -40,10 +26,10 @@ export default function Header(props: Props) {
                             </li>
                         </ul>
 
-                        <form method="get" action="/" onSubmit={(e) => searchRooms(e)} className="d-flex" role="search">
+                        <Form method="get" action="/" className="d-flex" role="search">
                             <input type="search" name="q" defaultValue={searchParams.get('q') ?? ''} placeholder="Search chat room by name" className="form-control me-2" aria-label="Search"/>
                             <button className="btn btn-outline-success" type="submit">Search</button>
-                        </form>
+                        </Form>
                     </div>
                 </div>
             </nav>

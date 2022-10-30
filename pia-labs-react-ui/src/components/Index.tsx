@@ -1,22 +1,20 @@
-import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, LoaderFunctionArgs, useLoaderData, useSearchParams } from "react-router-dom";
 import { searchRooms } from "../services/RoomService";
 import { Room } from "../types";
 import RoomListItem from "./RoomListItem";
+
+export function loader({ request }: LoaderFunctionArgs): Promise<Room[]> {
+    const url = new URL(request.url);
+    const query = url.searchParams.get('q') ?? undefined;
+    return searchRooms(query);
+}
 
 type Props = {
 }
 
 export default function Index(props: Props) {
-    const [ rooms, setRooms ] = useState<Room[]>([]);
+    const rooms = useLoaderData() as Room[];
     const [ searchParams ] = useSearchParams();
-
-    useEffect(() => {
-        const query: string | undefined = searchParams.get('q') ?? undefined;
-
-        searchRooms(query)
-            .then(setRooms);
-    }, [ searchParams ])
 
     return (
         <section className="my-3">

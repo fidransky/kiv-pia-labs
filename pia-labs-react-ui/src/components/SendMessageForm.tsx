@@ -1,12 +1,21 @@
-import { FormEventHandler } from "react";
+import { ActionFunctionArgs, Form } from "react-router-dom";
+import { sendMessage } from "../services/RoomService";
 
 type Props = {
-    onSubmit: FormEventHandler,
 }
 
-export default function SendMessageForm({ onSubmit }: Props) {
+export async function action({ request, params }: ActionFunctionArgs) {
+    const formData = await request.formData();
+    const text = formData.get('text')?.toString();
+
+    if (text === undefined) return;
+
+    return sendMessage(params.roomId, text);
+}
+
+export default function SendMessageForm(props: Props) {
     return (
-        <form method="post" onSubmit={onSubmit} className="mt-3">
+        <Form method="post" action="message" className="mt-3">
             <div className="row g-3 align-items-center">
                 <div className="col-auto">
                     <label htmlFor="messageText" className="col-form-label">
@@ -20,6 +29,6 @@ export default function SendMessageForm({ onSubmit }: Props) {
                     <button type="submit" className="btn btn-primary">Send</button>
                 </div>
             </div>
-        </form>
+        </Form>
     );
 }

@@ -1,8 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import CreateRoom from "./components/CreateRoom";
-import Index from "./components/Index";
-import ViewRoom from "./components/ViewRoom";
+import { action as createRoomAction } from "./components/CreateRoomForm";
+import Index, { loader as indexLoader } from "./components/Index";
+import { action as sendMessageAction } from "./components/SendMessageForm";
+import ViewRoom, { loader as viewRoomLoader } from "./components/ViewRoom";
 
 const router = createBrowserRouter([
     {
@@ -12,6 +14,7 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Index/>,
+                loader: indexLoader,
             },
             {
                 path: 'room',
@@ -19,10 +22,18 @@ const router = createBrowserRouter([
                     {
                         path: 'create',
                         element: <CreateRoom/>,
+                        action: createRoomAction,
                     },
                     {
                         path: ':roomId',
                         element: <ViewRoom/>,
+                        loader: viewRoomLoader,
+                        children: [
+                            {
+                                path: 'message',
+                                action: sendMessageAction,
+                            },
+                        ],
                     },
                 ],
             },
