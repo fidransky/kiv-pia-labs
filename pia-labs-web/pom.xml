@@ -169,6 +169,50 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <workingDirectory>${project.parent.basedir}/pia-labs-react-ui</workingDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>npm run build</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>build</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy build</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>robocopy</executable>
+                            <arguments>
+                                <argument>/e</argument>
+                                <argument>build</argument>
+                                <argument>${project.basedir}/src/main/webapp/react</argument>
+                            </arguments>
+                            <successCodes>
+                                <successCode>1</successCode>
+                                <successCode>3</successCode>
+                                <successCode>4</successCode>
+                            </successCodes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
