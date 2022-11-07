@@ -42,6 +42,18 @@ export default function ViewRoom(props: Props) {
     }, [ room ]);
 
     useEffect(() => {
+        const eventSource = new EventSource('http://localhost:8080/pia-labs/spring/v1/rooms/' + room.id + '/messages');
+        eventSource.onmessage = function onMessageReceived(payload) {
+            console.log({ payload });
+        };
+
+        return () => {
+            eventSource.close();
+        };
+
+    }, [ room ]);
+
+    useEffect(() => {
         let subscription: StompSubscription | undefined;
 
         client.onConnect = function onConnect(frame) {
