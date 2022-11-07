@@ -2,6 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html(title=${room.name} + ' chat room')}">
 <head>
     <title th:text="${room.name} + ' chat room'"></title>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.js"></script>
+    <script th:inline="javascript">
+        const client = new StompJs.Client();
+        client.brokerURL = 'ws://localhost:61614/ws';
+
+        client.onConnect = function onConnect(frame) {
+            const destination = '/topic/kiv.pia.chat.room.[(${room.id})]';
+
+            client.subscribe(destination, function onMessageReceived(payload) {
+                const message = JSON.parse(payload.body);
+                console.log({ message });
+            });
+        };
+        client.activate();
+    </script>
 </head>
 <body>
 <section layout:fragment="content" class="my-3">
