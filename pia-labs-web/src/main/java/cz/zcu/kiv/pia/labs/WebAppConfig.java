@@ -1,9 +1,6 @@
 package cz.zcu.kiv.pia.labs;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import cz.zcu.kiv.pia.labs.number.reactive.ConstantReactiveNumberService;
 import cz.zcu.kiv.pia.labs.number.reactive.RandomReactiveNumberService;
 import cz.zcu.kiv.pia.labs.number.reactive.ReactiveNumberService;
@@ -12,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpMethod;
@@ -58,15 +54,6 @@ public class WebAppConfig implements WebFluxConfigurer {
     @Bean
     public ReactiveNumberService constantNumberService() {
         return new ConstantReactiveNumberService(666L);
-    }
-
-    @Bean
-    @Primary
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper()
-                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                .registerModule(new JavaTimeModule());
     }
 
     @Override

@@ -10,6 +10,10 @@ public class User {
     private final String username;
     private final List<Room> rooms;
 
+    public User() {
+        this(null, null);
+    }
+
     public User(String username) {
         this(UUID.randomUUID(), username);
     }
