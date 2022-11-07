@@ -1,5 +1,7 @@
 package cz.zcu.kiv.pia.labs.chat.domain;
 
+import reactor.core.publisher.Sinks;
+
 import java.util.*;
 
 public class Room {
@@ -9,6 +11,7 @@ public class Room {
     private final User administrator;
     private final List<User> users;
     private final List<Message> messages;
+    private final Sinks.Many<Message> messageSink = Sinks.many().multicast().onBackpressureBuffer();
 
     public Room(String name, User administrator) {
         this(UUID.randomUUID(), name, administrator);
@@ -60,6 +63,10 @@ public class Room {
 
     public List<Message> getMessages() {
         return messages;
+    }
+
+    public Sinks.Many<Message> streamMessages() {
+        return messageSink;
     }
 
     @Override

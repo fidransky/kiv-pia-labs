@@ -91,6 +91,17 @@ public class RoomService implements ApplicationEventPublisherAware {
     }
 
     /**
+     * Retrieves chat room messages by chat room identifier
+     *
+     * @param id Unique chat room identifier
+     * @return Chat room messages
+     */
+    public Flux<Message> streamRoomMessages(UUID id) {
+        return roomRepository.findById(id)
+                .flatMapMany(room -> room.streamMessages().asFlux());
+    }
+
+    /**
      * Joins user to chat room with given identifier
      *
      * @param id Unique chat room identifier
