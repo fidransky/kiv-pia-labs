@@ -3,7 +3,10 @@ package cz.zcu.kiv.pia.labs.chat.service;
 import cz.zcu.kiv.pia.labs.chat.domain.Message;
 import cz.zcu.kiv.pia.labs.chat.domain.Room;
 import cz.zcu.kiv.pia.labs.chat.domain.User;
+import cz.zcu.kiv.pia.labs.chat.event.MessageSentEvent;
 import cz.zcu.kiv.pia.labs.chat.repository.RoomRepository;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
@@ -12,13 +15,19 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 @Service
-public class RoomService {
+public class RoomService implements ApplicationEventPublisherAware {
     public static final Room DEFAULT_ROOM = new Room("default", UserService.DEFAULT_USER);
 
     private final RoomRepository roomRepository;
+    private ApplicationEventPublisher eventPublisher;
 
     public RoomService(RoomRepository roomRepository) {
         this.roomRepository = roomRepository;
+    }
+
+    @Override
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.eventPublisher = applicationEventPublisher;
     }
 
     /**
@@ -102,6 +111,11 @@ public class RoomService {
      */
     public Mono<Room> sendMessageToRoom(UUID id, Message message) {
         return roomRepository.findById(id)
-                .doOnNext(room -> room.sendMessage(message));
+                .doOnNext(room -> room.sendMessage(message))
+                .doOnSuccess(room -> {
+                    if (eventPublisher != null) {
+                        eventPublisher.publishEvent(new MessageSentEvent(room, message));
+                    }
+                });
     }
 }
