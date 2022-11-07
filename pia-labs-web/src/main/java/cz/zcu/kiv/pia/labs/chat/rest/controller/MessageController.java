@@ -38,7 +38,7 @@ public class MessageController implements MessagesApi {
 
     @GetMapping(path = "/v1/rooms/{roomId}/messages", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<MessageVO> streamRoomMessages(@PathVariable("roomId") UUID roomId) {
-        return roomService.getRoomMessages(roomId)
+        return roomService.streamRoomMessages(roomId)
                 .map(room -> conversionService.convert(room, MessageVO.class));
     }
 

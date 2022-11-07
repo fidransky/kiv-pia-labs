@@ -78,7 +78,7 @@ public class GraphQLController {
 
     @SubscriptionMapping
     public Flux<MessageVO> streamRoomMessages(@Argument UUID roomId) {
-        return roomService.getRoomMessages(roomId)
+        return roomService.streamRoomMessages(roomId)
                 .map(room -> conversionService.convert(room, MessageVO.class));
     }
 }
