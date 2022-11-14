@@ -26,7 +26,7 @@
                 <div class="col-md-10 col-lg-9 col-xl-8">
                     <div th:each="message : ${messages}" class="d-flex flex-row py-3 border-bottom">
                         <strong th:text="${message.author.username} + ':'" class="me-3 text-nowrap"></strong>
-                        <span th:text="${message.text}"></span>
+                        <span th:utext="${message.text}"></span>
                         <time class="ms-auto text-muted text-nowrap" th:text="${#temporals.format(message.timestamp, 'dd/MM/yyyy HH:mm:ss')}"></time>
                     </div>
 

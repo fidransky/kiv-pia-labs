@@ -10,7 +10,7 @@
                 <h1 class="h3 mb-4">Join a chat room</h1>
 
                 <div th:if="${#lists.isEmpty(rooms)}" class="alert alert-warning" role="alert">
-                    No chat rooms were found for query <q th:text="${query}"></q>.
+                    No chat rooms were found for query <q th:utext="${query}"></q>.
                 </div>
 
                 <div th:each="room : ${rooms}" class="d-flex flex-row align-items-center py-3 border-bottom">
