@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,6 +29,8 @@
                             <input type="search" name="q" th:value="${query}" placeholder="Search chat room by name" class="form-control me-2" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
+                        <span class="navbar-text ms-4 me-2" sec:authentication="name"></span>
+                        <a th:href="@{/logout}" class="btn btn-outline-danger">Log out</a>
                     </div>
                 </div>
             </nav>
