@@ -1,6 +1,7 @@
 package cz.zcu.kiv.pia.labs.chat.ui.controller;
 
 import cz.zcu.kiv.pia.labs.chat.service.RoomService;
+import cz.zcu.kiv.pia.labs.chat.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,8 @@ public final class IndexController extends AbstractController {
     // Autowire RoomService using constructor-based dependency injection
     private final RoomService roomService;
 
-    public IndexController(RoomService roomService) {
+    public IndexController(UserService userService, RoomService roomService, UserService userService1) {
+        super(userService);
         this.roomService = roomService;
     }
 

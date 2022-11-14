@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import reactor.core.publisher.Mono;
 
 // Note that we're not using @RestController here
 @Controller
@@ -16,7 +17,8 @@ public final class CreateRoomController extends AbstractController {
     // Autowire RoomService using constructor-based dependency injection
     private final RoomService roomService;
 
-    public CreateRoomController(RoomService roomService) {
+    public CreateRoomController(RoomService roomService, UserService userService) {
+        super(userService);
         this.roomService = roomService;
     }
 
@@ -29,10 +31,9 @@ public final class CreateRoomController extends AbstractController {
     }
 
     @PostMapping("/room/create")
-    public String createRoom(@ModelAttribute RoomVO roomVO, BindingResult errors, Model model) {
-        var room = roomService.createRoom(roomVO.name(), UserService.DEFAULT_USER);
-
-        // Redirect to room view
-        return "redirect:/room/" + room.block().getId();
+    public Mono<String> createRoom(@ModelAttribute RoomVO roomVO, BindingResult errors, Model model) {
+        return userService.getCurrentUser()
+                .flatMap(user -> roomService.createRoom(roomVO.name(), user))
+                .map(room -> "redirect:/room/" + room.getId()); // Redirect to room view
     }
 }

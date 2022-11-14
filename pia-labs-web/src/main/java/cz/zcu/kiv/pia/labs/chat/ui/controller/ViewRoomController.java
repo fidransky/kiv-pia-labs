@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.thymeleaf.spring5.context.webflux.ReactiveDataDriverContextVariable;
+import reactor.core.publisher.Mono;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -21,7 +22,8 @@ public final class ViewRoomController extends AbstractController {
     // Autowire RoomService using constructor-based dependency injection
     private final RoomService roomService;
 
-    public ViewRoomController(RoomService roomService) {
+    public ViewRoomController(RoomService roomService, UserService userService) {
+        super(userService);
         this.roomService = roomService;
     }
 
@@ -47,11 +49,10 @@ public final class ViewRoomController extends AbstractController {
     }
 
     @PostMapping("/room/{roomId}/messages")
-    public String sendMessage(@PathVariable UUID roomId, @ModelAttribute MessageVO messageVO) {
-        var message = new Message(UUID.randomUUID(), messageVO.text(), Instant.now(), UserService.DEFAULT_USER);
-        var room = roomService.sendMessageToRoom(roomId, message);
-
-        // Redirect back to room view
-        return "redirect:/room/" + room.block().getId();
+    public Mono<String> sendMessage(@PathVariable UUID roomId, @ModelAttribute MessageVO messageVO) {
+        return userService.getCurrentUser()
+                .map(user -> new Message(UUID.randomUUID(), messageVO.text(), Instant.now(), user))
+                .flatMap(message -> roomService.sendMessageToRoom(roomId, message))
+                .map(room -> "redirect:/room/" + room.getId());
     }
 }
