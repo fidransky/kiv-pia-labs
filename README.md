@@ -14,7 +14,7 @@ Each topic has its own wiki page.
 6. [UI - server-side](https://github.com/fidransky/kiv-pia-labs/wiki/UI---server-side) (25.10.)
 7. [UI - client-side](https://github.com/fidransky/kiv-pia-labs/wiki/UI---client-side) (1.11.)
 8. [Messaging](https://github.com/fidransky/kiv-pia-labs/wiki/Messaging) (8.11.)
-9. Security (15.11.)
+9. [Security](https://github.com/fidransky/kiv-pia-labs/wiki/Security) (15.11.)
 10. Database access (22.11.)
 11. Database access (29.11.)
 12. Web app testing (6.12.)
