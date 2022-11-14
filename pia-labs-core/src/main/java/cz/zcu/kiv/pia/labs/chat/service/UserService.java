@@ -2,11 +2,14 @@ package cz.zcu.kiv.pia.labs.chat.service;
 
 import cz.zcu.kiv.pia.labs.chat.domain.User;
 import cz.zcu.kiv.pia.labs.chat.repository.UserRepository;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
-public class UserService {
+public class UserService implements ReactiveUserDetailsService {
 
     public static final User DEFAULT_USER = new User("john.doe");
     private final UserRepository userRepository;
@@ -25,5 +28,18 @@ public class UserService {
         var user = new User(username);
 
         return userRepository.registerUser(user);
+    }
+
+    @Override
+    public Mono<UserDetails> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    /**
+     * @return Currently authenticated user
+     */
+    public Mono<User> getCurrentUser() {
+        return ReactiveSecurityContextHolder.getContext()
+                .map(securityContext -> (User) securityContext.getAuthentication().getPrincipal());
     }
 }
