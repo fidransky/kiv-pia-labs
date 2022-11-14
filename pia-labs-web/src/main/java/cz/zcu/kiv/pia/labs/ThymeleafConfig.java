@@ -11,6 +11,7 @@ import org.springframework.web.reactive.config.ViewResolverRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 import org.springframework.web.reactive.result.view.ViewResolver;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.ISpringWebFluxTemplateEngine;
 import org.thymeleaf.spring5.SpringWebFluxTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -47,6 +48,7 @@ public class ThymeleafConfig implements WebFluxConfigurer {
         templateEngine.setEnableSpringELCompiler(true);
         templateEngine.addDialect(new LayoutDialect()); // add the ability to decorate templates
         templateEngine.addDialect(new Java8TimeDialect()); // enable access to the #temporals utility object in your templates
+        templateEngine.addDialect(new SpringSecurityDialect()); // enable security features
         return templateEngine;
     }
 
