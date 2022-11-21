@@ -13,8 +13,8 @@ import java.sql.SQLException;
 /**
  * Plain JDBC-based implementation of {@link UserRepository}.
  */
-@Primary
-@Repository
+//@Primary
+//@Repository
 public class PlainJdbcUserRepository implements UserRepository {
     private static final UserMapper USER_MAPPER = new UserMapper();
     private final DataSource dataSource;
