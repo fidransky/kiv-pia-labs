@@ -6,9 +6,11 @@ import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 @Service
+@Transactional(readOnly = true)
 public class UserService implements ReactiveUserDetailsService {
 
     public static final User DEFAULT_USER = new User("john.doe");
@@ -24,6 +26,7 @@ public class UserService implements ReactiveUserDetailsService {
      * @param username User's unique username
      * @return Registered user
      */
+    @Transactional
     public Mono<User> registerUser(String username) {
         var user = new User(username);
 

@@ -8,6 +8,7 @@ import cz.zcu.kiv.pia.labs.chat.repository.RoomRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,6 +16,7 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 @Service
+@Transactional(readOnly = true)
 public class RoomService implements ApplicationEventPublisherAware {
     public static final Room DEFAULT_ROOM = new Room("default", UserService.DEFAULT_USER);
 
@@ -51,6 +53,7 @@ public class RoomService implements ApplicationEventPublisherAware {
      * @param administrator Administrator of the new chat room
      * @return Created chat room
      */
+    @Transactional
     public Mono<Room> createRoom(String name, User administrator) {
         return Mono.just(new Room(name, administrator))
                 .flatMap(roomRepository::createRoom);
@@ -108,6 +111,7 @@ public class RoomService implements ApplicationEventPublisherAware {
      * @param user User joining chat room
      * @return Void
      */
+    @Transactional
     public Mono<Room> joinRoom(UUID id, User user) {
         return roomRepository.findById(id)
                 .doOnNext(room -> room.join(user));
@@ -120,6 +124,7 @@ public class RoomService implements ApplicationEventPublisherAware {
      * @param message Message sent to chat room
      * @return Chat room
      */
+    @Transactional
     public Mono<Room> sendMessageToRoom(UUID id, Message message) {
         return roomRepository.findById(id)
                 .doOnNext(room -> room.sendMessage(message))
