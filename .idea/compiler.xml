@@ -9,6 +9,7 @@
         <module name="pia-labs-core" />
         <module name="pia-labs-web" />
         <module name="pia-labs-typescript-client" />
+        <module name="pia-labs-dao-jdbc" />
       </profile>
     </annotationProcessing>
   </component>

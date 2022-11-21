@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/pia-labs-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pia-labs-core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pia-labs-dao-jdbc/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pia-labs-dao-jdbc/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pia-labs-typescript-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pia-labs-typescript-client/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pia-labs-web/src/main/java" charset="UTF-8" />

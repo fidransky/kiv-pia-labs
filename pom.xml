@@ -12,6 +12,7 @@
         <module>pia-labs-core</module>
         <module>pia-labs-web</module>
         <module>pia-labs-typescript-client</module>
+        <module>pia-labs-dao-jdbc</module>
     </modules>
 
     <properties>
@@ -65,6 +66,11 @@
                 <version>5.8.0-RC1</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>5.3.22</version>
             </dependency>
             <dependency>
                 <groupId>org.thymeleaf</groupId>
