@@ -53,7 +53,7 @@ public class RoomService implements ApplicationEventPublisherAware {
      */
     public Mono<Room> createRoom(String name, User administrator) {
         return Mono.just(new Room(name, administrator))
-                .doOnNext(roomRepository::createRoom);
+                .flatMap(roomRepository::createRoom);
     }
 
     /**
