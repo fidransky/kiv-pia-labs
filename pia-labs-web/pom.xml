@@ -24,6 +24,11 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
+            <groupId>cz.zcu.kiv.pia</groupId>
+            <artifactId>pia-labs-dao-jdbc</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
