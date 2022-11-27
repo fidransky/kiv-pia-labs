@@ -6,6 +6,7 @@ import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.io.Resource;
 import org.springframework.r2dbc.connection.R2dbcTransactionManager;
 import org.springframework.r2dbc.connection.init.ConnectionFactoryInitializer;
@@ -58,6 +59,7 @@ public class R2dbcConfig {
     }
 
     @Bean
+    @DependsOn("flyway")
     public ConnectionFactoryInitializer initializer(ConnectionFactory connectionFactory) {
         var initializer = new ConnectionFactoryInitializer();
         initializer.setConnectionFactory(connectionFactory);
