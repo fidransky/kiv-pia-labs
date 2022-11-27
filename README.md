@@ -16,6 +16,6 @@ Each topic has its own wiki page.
 8. [Messaging](https://github.com/fidransky/kiv-pia-labs/wiki/Messaging) (8.11.)
 9. [Security](https://github.com/fidransky/kiv-pia-labs/wiki/Security) (15.11.)
 10. [Database access](https://github.com/fidransky/kiv-pia-labs/wiki/Database-access) (22.11.)
-11. Database access (29.11.)
+11. [Database access](https://github.com/fidransky/kiv-pia-labs/wiki/Database-access-2) (29.11.)
 12. Web app testing (6.12.)
 13. Semester project (13.12.)
