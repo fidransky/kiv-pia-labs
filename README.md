@@ -18,4 +18,4 @@ Each topic has its own wiki page.
 10. [Database access](https://github.com/fidransky/kiv-pia-labs/wiki/Database-access) (22.11.)
 11. [Database access](https://github.com/fidransky/kiv-pia-labs/wiki/Database-access-2) (29.11.)
 12. [Web app testing](https://github.com/fidransky/kiv-pia-labs/wiki/Testing) (6.12.)
-13. Semester project (13.12.)
+13. ~~Semester project~~ (13.12., cancelled)
