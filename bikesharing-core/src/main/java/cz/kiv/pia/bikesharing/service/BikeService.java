@@ -1,6 +1,7 @@
 package cz.kiv.pia.bikesharing.service;
 
 import cz.kiv.pia.bikesharing.domain.Bike;
+import cz.kiv.pia.bikesharing.exception.BikeNotFoundException;
 import cz.kiv.pia.bikesharing.exception.BikeNotServiceableException;
 
 import java.util.Collection;
@@ -27,6 +28,7 @@ public interface BikeService {
      * Marks <code>bike</code> as serviced right now.
      *
      * @param bike Serviced bike
+     * @throws BikeNotFoundException when bike is not found
      * @throws BikeNotServiceableException when bike is not due for service yet
      */
     void markServiced(Bike bike);

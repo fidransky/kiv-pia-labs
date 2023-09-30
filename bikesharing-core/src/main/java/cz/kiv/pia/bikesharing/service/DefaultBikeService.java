@@ -4,14 +4,16 @@ import cz.kiv.pia.bikesharing.domain.Bike;
 import cz.kiv.pia.bikesharing.exception.BikeNotServiceableException;
 import cz.kiv.pia.bikesharing.repository.BikeRepository;
 
-import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
 
 public class DefaultBikeService implements BikeService {
     private final BikeRepository bikeRepository;
+    private final Period serviceInterval;
 
-    public DefaultBikeService(BikeRepository bikeRepository) {
+    public DefaultBikeService(BikeRepository bikeRepository, Period serviceInterval) {
         this.bikeRepository = bikeRepository;
+        this.serviceInterval = serviceInterval;
     }
 
     @Override
@@ -26,14 +28,14 @@ public class DefaultBikeService implements BikeService {
 
     @Override
     public void markServiced(Bike bike) {
-        LocalDate twoMonthsAgo = LocalDate.now().minusMonths(2);
+        var existingBike = bikeRepository.getById(bike.getId());
 
-        if (!bike.getLastServiceTimestamp().isAfter(twoMonthsAgo)) {
-            throw new BikeNotServiceableException(bike);
+        if (!existingBike.isDueForService(serviceInterval)) {
+            throw new BikeNotServiceableException(existingBike);
         }
 
-        bike.markServiced();
+        existingBike.markServiced();
 
-        bikeRepository.saveBike(bike);
+        bikeRepository.save(existingBike);
     }
 }

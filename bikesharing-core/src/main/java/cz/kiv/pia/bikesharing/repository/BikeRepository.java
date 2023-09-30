@@ -1,8 +1,10 @@
 package cz.kiv.pia.bikesharing.repository;
 
 import cz.kiv.pia.bikesharing.domain.Bike;
+import cz.kiv.pia.bikesharing.exception.BikeNotFoundException;
 
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * Repository storing all information related to bikes.
@@ -23,9 +25,18 @@ public interface BikeRepository {
     Collection<Bike> getBikesDueForService();
 
     /**
+     * Retrieves bike with given ID.
+     *
+     * @param bikeId Bike ID
+     * @return Found bike
+     * @throws BikeNotFoundException when bike with given ID is not found
+     */
+    Bike getById(UUID bikeId);
+
+    /**
      * Saves new state of an existing bike.
      *
      * @param bike Bike to be saved
      */
-    void saveBike(Bike bike);
+    void save(Bike bike);
 }

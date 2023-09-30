@@ -1,6 +1,7 @@
 package cz.kiv.pia.bikesharing.domain;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ public class Bike {
     /**
      * Current location of the bike, updated in real-time.
      */
-    private final Location location;
+    private Location location;
     /**
      * Date of the last service.
      */
@@ -23,8 +24,14 @@ public class Bike {
     /**
      * Stand that the bike is currently placed at. Can be null if the bike is ridden atm.
      */
-    private final Stand stand;
+    private Stand stand;
 
+    // constructor used when a reference to Bike is needed in other object but full Bike object is not loaded from storage
+    public Bike(UUID id) {
+        this.id = id;
+    }
+
+    // constructor used when full Bike object is loaded from storage
     public Bike(UUID id, Location location, LocalDate lastServiceTimestamp, Stand stand) {
         this.id = id;
         this.location = location;
@@ -46,6 +53,18 @@ public class Bike {
 
     public Stand getStand() {
         return stand;
+    }
+
+    /**
+     * Checks whether this bike is due for service.
+     *
+     * @param serviceInterval Maximum service interval
+     * @return True if bike is due for service, false otherwise
+     */
+    public boolean isDueForService(Period serviceInterval) {
+        LocalDate nextServiceTimestamp = lastServiceTimestamp.plus(serviceInterval);
+
+        return LocalDate.now().isAfter(nextServiceTimestamp);
     }
 
     /**
