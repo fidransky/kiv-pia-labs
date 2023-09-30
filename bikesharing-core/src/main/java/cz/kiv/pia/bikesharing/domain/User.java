@@ -47,6 +47,20 @@ public class User {
         return role;
     }
 
+    /**
+     * Starts a new bike ride of this user on given bike.
+     *
+     * @param bike Bike used for the bike ride
+     * @return Started bike ride
+     */
+    public Ride startRide(Bike bike) {
+        var startStand = bike.getStand();
+
+        bike.removeFromStand();
+
+        return new Ride(this, bike, startStand);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -41,6 +41,12 @@ public class Ride {
      */
     private final Stand endStand;
 
+    // constructor used when starting a new Ride
+    Ride(User user, Bike bike, Stand startStand) {
+        this(UUID.randomUUID(), user, bike, State.STARTED, Instant.now(), startStand, null, null);
+    }
+
+    // constructor used when full Ride object is loaded from storage
     public Ride(UUID id, User user, Bike bike, State state, Instant startTimestamp, Stand startStand, Instant endTimestamp, Stand endStand) {
         this.id = id;
         this.user = user;
