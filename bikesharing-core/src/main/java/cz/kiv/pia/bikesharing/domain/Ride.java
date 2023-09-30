@@ -35,11 +35,11 @@ public class Ride {
     /**
      * Ending timestamp of the ride. Null until the ride is finished
      */
-    private final Instant endTimestamp;
+    private Instant endTimestamp;
     /**
      * Ending {@link Stand} of the ride. Null until the ride is finished
      */
-    private final Stand endStand;
+    private Stand endStand;
 
     // constructor used when starting a new Ride
     Ride(User user, Bike bike, Stand startStand) {
@@ -90,6 +90,17 @@ public class Ride {
         return endStand;
     }
 
+    /**
+     * Completes this ride at given {@link Stand}.
+     *
+     * @param endStand End stand where the ride is completed
+     */
+    public void complete(Stand endStand) {
+        this.state = State.COMPLETED;
+        this.endTimestamp = Instant.now();
+        this.endStand = endStand;
+        this.bike.addToStand(endStand);
+    }
 
     /**
      * @return true if this ride is started, false otherwise
