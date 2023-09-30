@@ -15,11 +15,11 @@ public class Ride {
     /**
      * User riding the {@link #bike}
      */
-    private final User user;
+    private User user;
     /**
      * Bike ridden by the {@link #user}
      */
-    private final Bike bike;
+    private Bike bike;
     /**
      * Current state of the ride
      */
@@ -27,11 +27,11 @@ public class Ride {
     /**
      * Starting timestamp of the ride
      */
-    private final Instant startTimestamp;
+    private Instant startTimestamp;
     /**
      * Starting {@link Stand} of the ride
      */
-    private final Stand startStand;
+    private Stand startStand;
     /**
      * Ending timestamp of the ride. Null until the ride is finished
      */
@@ -40,6 +40,11 @@ public class Ride {
      * Ending {@link Stand} of the ride. Null until the ride is finished
      */
     private Stand endStand;
+
+    // constructor used when a reference to Ride is needed in other object but full Ride object is not loaded from storage
+    public Ride(UUID id) {
+        this.id = id;
+    }
 
     // constructor used when starting a new Ride
     Ride(User user, Bike bike, Stand startStand) {
