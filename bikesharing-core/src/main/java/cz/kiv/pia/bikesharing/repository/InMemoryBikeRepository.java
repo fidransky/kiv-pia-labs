@@ -2,10 +2,12 @@ package cz.kiv.pia.bikesharing.repository;
 
 import cz.kiv.pia.bikesharing.domain.Bike;
 import cz.kiv.pia.bikesharing.exception.BikeNotFoundException;
+import org.springframework.stereotype.Repository;
 
 import java.time.Period;
 import java.util.*;
 
+@Repository
 public class InMemoryBikeRepository implements BikeRepository {
 
     final Set<Bike> store;

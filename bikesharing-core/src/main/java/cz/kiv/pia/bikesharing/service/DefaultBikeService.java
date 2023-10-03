@@ -4,12 +4,14 @@ import cz.kiv.pia.bikesharing.domain.Bike;
 import cz.kiv.pia.bikesharing.exception.BikeNotServiceableException;
 import cz.kiv.pia.bikesharing.repository.BikeRepository;
 import org.slf4j.Logger;
+import org.springframework.stereotype.Service;
 
 import java.time.Period;
 import java.util.Collection;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+@Service
 public class DefaultBikeService implements BikeService {
     private static final Logger LOG = getLogger(DefaultBikeService.class);
 
