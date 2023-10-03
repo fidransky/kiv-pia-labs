@@ -16,6 +16,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
@@ -30,6 +31,9 @@
     </dependencies>
 
     <build>
+        <!-- set final name of war artifact to artifactId i.e. bikesharing-rest-api.war -->
+        <finalName>${project.artifactId}</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
