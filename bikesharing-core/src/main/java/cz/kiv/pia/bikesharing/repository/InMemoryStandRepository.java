@@ -2,9 +2,11 @@ package cz.kiv.pia.bikesharing.repository;
 
 import cz.kiv.pia.bikesharing.domain.Location;
 import cz.kiv.pia.bikesharing.domain.Stand;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
 public class InMemoryStandRepository implements StandRepository {
     public static final Stand DEFAULT_STAND = new Stand(UUID.randomUUID(), "náměstí Republiky", new Location("49.7479433N", "13.3786114E"));
 
@@ -12,6 +14,7 @@ public class InMemoryStandRepository implements StandRepository {
 
     public InMemoryStandRepository() {
         this.store = new HashSet<>();
+        initialize();
     }
 
     void initialize() {
