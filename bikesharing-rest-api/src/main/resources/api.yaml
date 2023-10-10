@@ -1,0 +1,73 @@
+openapi: 3.0.3
+info:
+  title: Bikesharing REST API
+  version: 0.0.1
+tags:
+  - name: test
+    description: ...
+paths:
+  /hello:
+    get:
+      tags:
+        - test
+      summary: Says hello on behalf of given user
+      operationId: sayHello
+      parameters:
+        - name: from
+          in: query
+          description: blah
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Hello World from Pavel!
+        '405':
+          description: Not supported HTTP method.
+        '406':
+          description: Not acceptable response representation.
+  /stands:
+    get:
+      tags:
+        - stands
+      summary: ...
+      description: ...
+      operationId: retrieveStands
+      responses:
+        '200':
+          description: ...
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StandDTO'
+        '405':
+          description: Not supported HTTP method.
+        '406':
+          description: Not acceptable response representation.
+        '500':
+          description: Server error.
+components:
+  schemas:
+    StandDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        location:
+          $ref: '#/components/schemas/LocationDTO'
+    LocationDTO:
+      type: object
+      properties:
+        longitude:
+          type: string
+        latitude:
+          type: string
