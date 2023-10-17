@@ -58,7 +58,8 @@ public class GraphQLController {
 
         for (var standDTO : standDTOs) {
             // BEWARE: This causes N+1 queries to database, all bikes should better be loaded in bulk
-            var result = bikeService.getRideableBikes(standDTO.getId());
+            //var result = bikeService.getRideableBikes(standDTO.getId());
+            List<Bike> result = List.of();
 
             List<BikeDTO> bikeDTOs = new ArrayList<>();
             for (var bike : result) {
