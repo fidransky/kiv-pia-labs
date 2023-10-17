@@ -8,6 +8,10 @@ type UserDTO {
     User's unique username
     """
     username: String!
+    """
+    User's registration timestamp
+    """
+    registrationDate: DateTime!
 }
 
 type LocationDTO {

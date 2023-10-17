@@ -1,17 +1,22 @@
 package cz.kiv.pia.bikesharing.controller;
 
+import cz.kiv.pia.bikesharing.domain.Bike;
 import cz.kiv.pia.bikesharing.graphql.BikeDTO;
 import cz.kiv.pia.bikesharing.graphql.LocationDTO;
 import cz.kiv.pia.bikesharing.graphql.StandDTO;
+import cz.kiv.pia.bikesharing.graphql.UserDTO;
 import cz.kiv.pia.bikesharing.service.BikeService;
 import cz.kiv.pia.bikesharing.service.StandService;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.BatchMapping;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class GraphQLController {
@@ -80,5 +85,14 @@ public class GraphQLController {
         }
 
         return lists;
+    }
+
+    @MutationMapping
+    public UserDTO createUser(@Argument String username) {
+        return UserDTO.builder()
+                .withId(UUID.randomUUID())
+                .withUsername(username)
+                .withRegistrationDate(OffsetDateTime.now())
+                .build();
     }
 }
