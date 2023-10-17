@@ -19,6 +19,7 @@
         <module>bikesharing-core</module>
         <module>bikesharing-ui</module>
         <module>bikesharing-rest-api</module>
+        <module>bikesharing-graphql-api</module>
     </modules>
 
     <properties>

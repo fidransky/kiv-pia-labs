@@ -1,0 +1,72 @@
+# Scalars represent leaves of a query. Except for the default ones (Int, Float, String, Boolean, ID), we can define our own.
+scalar DateTime
+
+type UserDTO {
+    # Non-nullable UUID.
+    id: ID!
+    """
+    User's unique username
+    """
+    username: String!
+}
+
+type LocationDTO {
+    longitude: String!
+    latitude: String!
+}
+
+type BikeDTO {
+    id: ID!
+    location: LocationDTO!
+}
+
+type StandDTO {
+    id: ID!
+    name: String!
+    location: LocationDTO!
+    bikes: [BikeDTO!]!
+}
+
+type RideDTO {
+    id: ID!
+    user: UserDTO!
+    bike: BikeDTO!
+    state: RideState!
+}
+
+enum RideState {
+    """ Ride has started, cannot be started again but can be completed """
+    STARTED
+    """ Ride has completed, cannot be either started or completed again """
+    COMPLETED
+}
+
+type Query {
+    greeting(name: String! = "Pavel"): String!
+    """ Retrieves all stands currently in the system. """
+    retrieveStands: [StandDTO!]!
+    """ Retrieves all rides that current user has completed in the past, including any ride which might be ongoing at the moment. """
+    retrieveRides: [RideDTO!]!
+}
+
+type Mutation {
+    """
+    Creates a new user.
+    """
+    createUser(username: String!): UserDTO!
+    """
+    Starts a new bike ride.
+    """
+    startRide(bikeId: ID!): RideDTO!
+    """
+    Completes started ride.
+    """
+    completeRide(rideId: ID!, endStandId: ID!): RideDTO!
+}
+
+type Subscription {
+    """
+    Streams new messages as they are sent to the chat room.
+    """
+    streamBikeLocation(bikeId: ID!): LocationDTO!
+}
