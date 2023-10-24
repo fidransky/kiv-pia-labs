@@ -20,6 +20,7 @@
         <module>bikesharing-ui</module>
         <module>bikesharing-rest-api</module>
         <module>bikesharing-graphql-api</module>
+        <module>bikesharing-rest-typescript-client</module>
     </modules>
 
     <properties>
