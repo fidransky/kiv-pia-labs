@@ -24,6 +24,7 @@ class InMemoryStandRepositoryTest {
         var stand1 = new Stand(UUID.randomUUID(), "náměstí Republiky", new Location("49.7479433N", "13.3786114E"));
         var stand2 = new Stand(UUID.randomUUID(), "Fakulta aplikovaných věd ZČU", new Location("49.7269708N", "13.3516872E"));
 
+        standRepository.store.clear();
         standRepository.store.add(stand1);
         standRepository.store.add(stand2);
 
