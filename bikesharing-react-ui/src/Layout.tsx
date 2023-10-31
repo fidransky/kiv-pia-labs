@@ -10,6 +10,7 @@ export default function Layout() {
 				<img src={logo} alt="" style={{ float: 'left', height: '3rem', }}/>
 				<h1>Bikesharing</h1>
 			</Link>
+			<Link to='/hello' style={{ color: 'inherit' }}>Hello World</Link>
 		</header>
 
 		<Outlet/>
