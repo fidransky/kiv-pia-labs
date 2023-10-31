@@ -9,22 +9,31 @@ public class Location {
     /**
      * Longitude in defined coordinates system.
      */
-    private final String longitude;
+    private final Double longitude;
     /**
      * Latitude in defined coordinates system.
      */
-    private final String latitude;
+    private final Double latitude;
 
-    public Location(String longitude, String latitude) {
+    public Location(Double longitude, Double latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public Location(String longitude, String latitude) {
+        this.longitude = parseCoordinate(longitude);
+        this.latitude = parseCoordinate(latitude);
+    }
+
+    private static Double parseCoordinate(String coordinate) {
+        return Double.parseDouble(coordinate.replaceAll("N|E|S|W", ""));
+    }
+
+    public Double getLongitude() {
         return longitude;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 

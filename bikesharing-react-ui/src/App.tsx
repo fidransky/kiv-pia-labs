@@ -27,8 +27,8 @@ function App() {
       {stands.map((stand) => {
         return (
           <Marker key={stand.id} position={[
-            Number(stand.location!.longitude!.slice(0, -1)),
-            Number(stand.location!.latitude!.slice(0, -1)),
+            stand.location.longitude,
+            stand.location.latitude,
           ]}>
             <Popup>
               {stand.name}

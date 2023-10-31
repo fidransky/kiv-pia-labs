@@ -15,8 +15,8 @@ type UserDTO {
 }
 
 type LocationDTO {
-    longitude: String!
-    latitude: String!
+    longitude: Float!
+    latitude: Float!
 }
 
 type BikeDTO {

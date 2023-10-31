@@ -68,6 +68,8 @@ components:
       type: object
       properties:
         longitude:
-          type: string
+          type: number
+          format: double
         latitude:
-          type: string
+          type: number
+          format: double
