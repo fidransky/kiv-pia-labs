@@ -10,12 +10,9 @@ const standsApi = new StandsApi(configuration);
  * 
  * @returns All stands
  */
-export function retrieveStands() {
-	return standsApi.retrieveStands()
-		.then((stands) => {
-			// map DTOs from API to domain objects
-			return stands.map((standDTO) => {
-				return new Stand(standDTO);
-			});
-		});
+export async function retrieveStands() {
+	const stands = await standsApi.retrieveStands();
+
+	// map DTOs from API to domain objects
+	return stands.map((standDTO) => new Stand(standDTO));
 }
