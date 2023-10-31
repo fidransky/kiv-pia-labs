@@ -64,6 +64,10 @@ components:
           type: string
         location:
           $ref: '#/components/schemas/LocationDTO'
+      required:
+        - id
+        - name
+        - location
     LocationDTO:
       type: object
       properties:
@@ -73,3 +77,6 @@ components:
         latitude:
           type: number
           format: double
+      required:
+        - longitude
+        - latitude
