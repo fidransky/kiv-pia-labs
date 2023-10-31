@@ -1,23 +1,22 @@
-import { Configuration, StandDTO, StandsApi } from 'bikesharing-rest-typescript-client';
 import React from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-
-const basePath = 'http://localhost:8080';
-const configuration = new Configuration({ basePath });
-const standsApi = new StandsApi(configuration);
+import { retrieveStands } from './StandService';
+import { Stand } from './types';
 
 type Props = {
 	zoomLevel?: number,
 }
 
 export default function Home({ zoomLevel = 13 }: Props) {
-	const [ stands, setStands ] = React.useState<StandDTO[]>([]);
+	const [ stands, setStands ] = React.useState<Stand[]>([]);
 
+	/**
+	 * Loads all Stands currently in the system.
+	 */
 	React.useEffect(() => {
-		standsApi.retrieveStands()
-				.then((stands) => {
-						setStands(stands);
-				});
+		// TODO: error handling
+		retrieveStands()
+			.then(setStands);
 	}, []);
 
 	return (
