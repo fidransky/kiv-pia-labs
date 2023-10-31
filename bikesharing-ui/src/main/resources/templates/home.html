@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body layout:fragment="content">
+    <ul>
+        <li th:each="stand : ${stands}" th:text="${stand.name}">
+            This will get replaced by stand name
+        </li>
+    </ul>
+</body>
+</html>
