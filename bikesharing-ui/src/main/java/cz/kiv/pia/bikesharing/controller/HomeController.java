@@ -1,5 +1,7 @@
 package cz.kiv.pia.bikesharing.controller;
 
+import cz.kiv.pia.bikesharing.domain.Location;
+import cz.kiv.pia.bikesharing.domain.Stand;
 import cz.kiv.pia.bikesharing.service.StandService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +17,30 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("stands", standService.getAll());
+        var standVOs = standService.getAll().stream()
+                .map(StandVO::new)
+                .toList();
+
+        model.addAttribute("stands", standVOs);
 
         return "home";
+    }
+
+    private record StandVO(
+            String name,
+            LocationVO location
+    ) {
+        public StandVO(Stand stand) {
+            this(stand.getName(), new LocationVO(stand.getLocation()));
+        }
+    }
+
+    private record LocationVO(
+            Double longitude,
+            Double latitude
+    ) {
+        public LocationVO(Location location) {
+            this(location.getLongitude(), location.getLatitude());
+        }
     }
 }
