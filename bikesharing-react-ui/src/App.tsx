@@ -8,6 +8,7 @@ const basePath = 'http://localhost:8080';
 const configuration = new Configuration({ basePath });
 const standsApi = new StandsApi(configuration);
 
+// this component is not used anymore
 function App() {
   const [ stands, setStands ] = React.useState<StandDTO[]>([]);
 
