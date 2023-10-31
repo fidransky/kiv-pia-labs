@@ -1,23 +1,12 @@
-import React from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import { retrieveStands } from './StandService';
-import { Stand } from './types';
+import useStands from './useStands';
 
 type Props = {
 	zoomLevel?: number,
 }
 
 export default function Home({ zoomLevel = 13 }: Props) {
-	const [ stands, setStands ] = React.useState<Stand[]>([]);
-
-	/**
-	 * Loads all Stands currently in the system.
-	 */
-	React.useEffect(() => {
-		// TODO: error handling
-		retrieveStands()
-			.then(setStands);
-	}, []);
+	const stands = useStands();
 
 	return (
 		<MapContainer center={[49.7269708, 13.3516872]} zoom={zoomLevel}>
