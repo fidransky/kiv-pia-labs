@@ -4,7 +4,7 @@ info:
   version: 0.0.1
 tags:
   - name: test
-    description: ...
+    description: lorem ipsum
 paths:
   /hello:
     get:
@@ -35,12 +35,11 @@ paths:
     get:
       tags:
         - stands
-      summary: ...
-      description: ...
+      summary: Retrieves all stands currently in the system.
       operationId: retrieveStands
       responses:
         '200':
-          description: ...
+          description: Stands are retrieved.
           content:
             application/json:
               schema:
@@ -60,6 +59,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         name:
           type: string
         location:

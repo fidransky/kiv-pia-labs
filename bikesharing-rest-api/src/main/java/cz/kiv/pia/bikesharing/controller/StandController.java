@@ -28,7 +28,7 @@ public class StandController implements StandsApi {
                     .longitude(stand.getLocation().getLongitude());
 
             var standDTO = new StandDTO()
-                    .id(stand.getId().toString())
+                    .id(stand.getId())
                     .name(stand.getName())
                     .location(locationDTO);
 
