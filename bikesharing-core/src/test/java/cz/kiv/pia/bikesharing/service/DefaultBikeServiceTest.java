@@ -1,5 +1,6 @@
 package cz.kiv.pia.bikesharing.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.kiv.pia.bikesharing.domain.Bike;
 import cz.kiv.pia.bikesharing.exception.BikeNotFoundException;
 import cz.kiv.pia.bikesharing.exception.BikeNotServiceableException;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.jms.core.JmsTemplate;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -29,12 +31,16 @@ import static org.mockito.Mockito.when;
 class DefaultBikeServiceTest {
     @Mock
     private BikeRepository bikeRepository;
+    @Mock
+    private JmsTemplate jmsTemplate;
+    @Mock
+    private ObjectMapper objectMapper;
 
     private BikeService bikeService;
 
     @BeforeEach
     void setUp() {
-        this.bikeService = new DefaultBikeService(bikeRepository, Period.ofMonths(2));
+        this.bikeService = new DefaultBikeService(bikeRepository, jmsTemplate, objectMapper, Period.ofMonths(2));
     }
 
     @Nested

@@ -1,10 +1,13 @@
 package cz.kiv.pia.bikesharing.service;
 
 import cz.kiv.pia.bikesharing.domain.Bike;
+import cz.kiv.pia.bikesharing.domain.Location;
 import cz.kiv.pia.bikesharing.exception.BikeNotFoundException;
 import cz.kiv.pia.bikesharing.exception.BikeNotServiceableException;
 
 import java.util.Collection;
+import java.util.UUID;
+import java.util.function.Consumer;
 
 /**
  * Service supporting all use cases involving bikes.
@@ -32,4 +35,20 @@ public interface BikeService {
      * @throws BikeNotServiceableException when bike is not due for service yet
      */
     void markServiced(Bike bike);
+
+    /**
+     * Moves {@link Bike} with given <code>bikeId</code> to a new <code>location</code>.
+     *
+     * @param bikeId Unique bike identifier
+     * @param location New bike location
+     */
+    void moveBike(UUID bikeId, Location location);
+
+    /**
+     * Stream {@link Bike} location updates to given <code>subscriber</code>.
+     *
+     * @param bikeId Unique bike identifier
+     * @param subscriber Bike location subscriber
+     */
+    void watchBikeLocation(UUID bikeId, Consumer<Location> subscriber);
 }
