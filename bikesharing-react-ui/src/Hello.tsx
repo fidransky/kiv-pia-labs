@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
+import { Client, StompSubscription } from '@stomp/stompjs';
 import { useSearchParams } from 'react-router-dom';
 
 type Location = Pick<GeolocationCoordinates, 'longitude' | 'latitude'>;
 
 const bikeId = crypto.randomUUID();
 const url = `http://localhost:8080/bikes/${bikeId}/location`;
+
+const client = new Client();
+client.brokerURL = 'ws://localhost:61614/ws';
 
 export default function Hello() {
 	const [ searchParams ] = useSearchParams();
@@ -47,6 +51,29 @@ export default function Hello() {
 
 		return () => {
 			eventSource.close();
+		};
+	}, []);
+
+	/**
+	 * Stream bike location updates using StompJS.
+	 */
+	useEffect(() => {
+		let subscription: StompSubscription | undefined;
+
+		client.onConnect = function onConnect(frame) {
+			const destination = `/topic/kiv.pia.bikesharing.bikes.${bikeId}.location`;
+
+			subscription = client.subscribe(destination, function onMessageReceived(payload) {
+				const message = JSON.parse(payload.body);
+				console.log('stomp message:', message);
+			});
+		};
+		client.activate();
+
+		return () => {
+			if (subscription === undefined) return;
+
+			subscription.unsubscribe();
 		};
 	}, []);
 
