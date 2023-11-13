@@ -52,6 +52,41 @@ paths:
           description: Not acceptable response representation.
         '500':
           description: Server error.
+  /bikes/{bikeId}/location:
+    parameters:
+      - name: bikeId
+        in: path
+        required: true
+        description: Unique bike identifier.
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags:
+        - bikes
+      summary: Moves bike with given ID to a new location.
+      operationId: moveBike
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocationDTO"
+        required: true
+      responses:
+        '204':
+          description: Bike location is updated.
+        '400':
+          description: Coordinates are not formatted correctly.
+        '404':
+          description: Bike does not exist.
+        '405':
+          description: Not supported HTTP method.
+        '406':
+          description: Not acceptable response representation.
+        '409':
+          description: Bike does not belong to any started ride.
+        '500':
+          description: Server error.
 components:
   schemas:
     StandDTO:
