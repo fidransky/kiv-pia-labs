@@ -2,6 +2,7 @@ package cz.kiv.pia.bikesharing.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.kiv.pia.bikesharing.model.LocationDTO;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.annotation.JmsListener;
@@ -22,28 +23,13 @@ public class BikeController implements BikesApi {
     private final JmsTemplate jmsTemplate;
     private final ObjectMapper objectMapper;
 
-    public BikeController(JmsTemplate jmsTemplate, ObjectMapper objectMapper) {
+    public BikeController(@Qualifier("jmsTopicTemplate") JmsTemplate jmsTemplate, ObjectMapper objectMapper) {
         this.jmsTemplate = jmsTemplate;
         this.objectMapper = objectMapper;
     }
 
     @Override
     public ResponseEntity<Void> moveBike(UUID bikeId, LocationDTO locationDTO) {
-        /*
-        var event = SseEmitter.event()
-                .name("bikeLocation")
-                .data(locationDTO)
-                .build();
-
-        for (SseEmitter emitter : emitters.getOrDefault(bikeId, Collections.emptyList())) {
-            try {
-                emitter.send(event);
-            } catch (IOException e) {
-                emitters.get(bikeId).remove(emitter);
-            }
-        }
-         */
-
         try {
             var destination = "kiv.pia.bikesharing.bikes." + bikeId.toString() + ".location";
             var body = objectMapper.writeValueAsString(locationDTO);
@@ -57,7 +43,7 @@ public class BikeController implements BikesApi {
         }
     }
 
-    @JmsListener(destination = "kiv.pia.bikesharing.bikes.*.location")
+    @JmsListener(destination = "kiv.pia.bikesharing.bikes.*.location", containerFactory = "jmsTopicListenerFactory")
     public void processMessage(Message message) {
         try {
             var destination = message.getJMSDestination().toString();
