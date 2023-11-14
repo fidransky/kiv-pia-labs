@@ -1,11 +1,4 @@
-CREATE TABLE IF NOT EXISTS `stand` (
-  `id` binary(16) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `longitude` varchar(255) NOT NULL,
-  `latitude` varchar(255) NOT NULL,
-  PRIMARY KEY `id` (`id`),
-  UNIQUE `UK_name` (`name`)
-);
+-- this script is used to populate database by DataSourceInitializer bean (see JdbcConfiguration)
 
 INSERT INTO `stand` (`id`, `name`, `latitude`, `longitude`) VALUES
 (UUID_TO_BIN(UUID()), 'náměstí Republiky', '49.7479433N', '13.3786114E'),
