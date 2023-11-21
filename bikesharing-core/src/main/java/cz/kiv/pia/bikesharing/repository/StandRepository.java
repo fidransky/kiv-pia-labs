@@ -14,4 +14,14 @@ public interface StandRepository {
      * @return All stands
      */
     Collection<Stand> getAll();
+
+    /**
+     * Retrieves all stands matching given name currently in the system.
+     *
+     * @param q Partial stand name
+     * @return Stands matching given name
+     */
+    default Collection<Stand> getAllByName(String q) {
+        throw new UnsupportedOperationException();
+    }
 }

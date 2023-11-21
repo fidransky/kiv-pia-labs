@@ -22,6 +22,7 @@
         <module>bikesharing-graphql-api</module>
         <module>bikesharing-rest-typescript-client</module>
         <module>bikesharing-repository-jdbctemplate</module>
+        <module>bikesharing-repository-jpa</module>
     </modules>
 
     <properties>

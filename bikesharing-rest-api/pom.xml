@@ -24,9 +24,16 @@
             <artifactId>bikesharing-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>cz.zcu.kiv</groupId>
             <artifactId>bikesharing-repository-jdbctemplate</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>cz.zcu.kiv</groupId>
+            <artifactId>bikesharing-repository-jpa</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
