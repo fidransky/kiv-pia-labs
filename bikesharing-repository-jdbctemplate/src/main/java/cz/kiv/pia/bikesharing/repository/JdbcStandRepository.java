@@ -26,9 +26,9 @@ public class JdbcStandRepository implements StandRepository {
     private final DataSource dataSource;
     private final RowMapper<StandDTO> rowMapper;
 
-    public JdbcStandRepository(DataSource dataSource) {
+    public JdbcStandRepository(DataSource dataSource, StandRowMapper standRowMapper) {
         this.dataSource = dataSource;
-        this.rowMapper = new StandRowMapper();
+        this.rowMapper = standRowMapper;
     }
 
     @Override

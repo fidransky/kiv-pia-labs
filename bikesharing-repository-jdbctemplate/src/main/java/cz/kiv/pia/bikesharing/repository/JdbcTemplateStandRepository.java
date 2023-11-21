@@ -19,9 +19,9 @@ public class JdbcTemplateStandRepository implements StandRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<StandDTO> rowMapper;
 
-    public JdbcTemplateStandRepository(JdbcTemplate jdbcTemplate) {
+    public JdbcTemplateStandRepository(JdbcTemplate jdbcTemplate, StandRowMapper standRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
-        this.rowMapper = new StandRowMapper();
+        this.rowMapper = standRowMapper;
     }
 
     @Override
