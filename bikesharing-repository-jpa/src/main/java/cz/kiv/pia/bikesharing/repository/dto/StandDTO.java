@@ -23,7 +23,6 @@ public class StandDTO {
      * Bike stand location.
      */
     @Embedded
-    @Column
     private StandLocationDTO location;
 
     public StandDTO() {
