@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.jms.Message;
 import java.time.Period;
@@ -19,6 +20,7 @@ import java.util.function.Consumer;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+@Transactional(readOnly = true)
 @Service
 public class DefaultBikeService implements BikeService {
     private static final Logger LOG = getLogger(DefaultBikeService.class);
@@ -52,6 +54,7 @@ public class DefaultBikeService implements BikeService {
     }
 
     @Override
+    @Transactional
     public void markServiced(Bike bike) {
         LOG.info("Marking bike {} serviced", bike);
 
