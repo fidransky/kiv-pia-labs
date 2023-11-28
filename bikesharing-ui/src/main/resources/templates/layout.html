@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <title>KIV/PIA Bikesharing</title>
@@ -9,11 +10,18 @@
 
 <body>
     <header>
-        <a th:href="@{/}" style="color: inherit; text-decoration: none;">
-            <img th:src="@{/thymeleaf.png}" alt="" style="float: left; height: 3rem; margin-inline: 0.5rem;">
-            <h1>Bikesharing</h1>
-        </a>
-        <a th:href="@{/hello}" style="color: inherit;">Hello World</a>
+        <div sec:authorize="isAuthenticated()">
+            <span sec:authentication="name"></span>
+            <a th:href="@{/logout}" style="color: inherit;">Log out</a>
+        </div>
+
+        <div>
+            <a th:href="@{/}" style="color: inherit; text-decoration: none;">
+                <img th:src="@{/thymeleaf.png}" alt="" style="float: left; height: 3rem; margin-inline: 0.5rem;">
+                <h1>Bikesharing</h1>
+            </a>
+            <a th:href="@{/hello}" style="color: inherit;">Hello World</a>
+        </div>
     </header>
 
     <section layout:fragment="content">
