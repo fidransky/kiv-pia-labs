@@ -7,7 +7,7 @@ Each topic has its own wiki page.
 ## Intended Schedule
 
 1. [Intro](https://github.com/fidransky/kiv-pia-labs/wiki/Intro) (17.9.)
-2. Domain modelling (24.9.)
+2. [Domain modelling](https://github.com/fidransky/kiv-pia-labs/wiki/Semester-project) (24.9.)
 3. [IoC, DI, Spring](https://github.com/fidransky/kiv-pia-labs/wiki/IoC,-DI,-Spring) (1.10.)
 4. [WS API - REST](https://github.com/fidransky/kiv-pia-labs/wiki/WS-API---REST) (8.10.)
 5. [WS API - GraphQL](https://github.com/fidransky/kiv-pia-labs/wiki/WS-API---GraphQL) (15.10.)
