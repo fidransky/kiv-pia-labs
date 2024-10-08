@@ -33,3 +33,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### project files ###
+src/main/resources/api.html
