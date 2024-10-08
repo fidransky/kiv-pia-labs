@@ -53,4 +53,20 @@ public class Damage {
 
         return new Document(this, description);
     }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public User getInsured() {
+        return insured;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public DamageState getState() {
+        return state;
+    }
 }

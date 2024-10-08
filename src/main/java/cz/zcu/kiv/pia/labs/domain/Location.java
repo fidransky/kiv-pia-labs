@@ -10,4 +10,12 @@ public class Location {
         this.longitude = longitude;
         this.latitude = latitude;
     }
+
+    public Location(Double longitude, Double latitude) {
+        this(new BigDecimal(longitude), new BigDecimal(latitude));
+    }
+
+    public Location(String longitude, String latitude) {
+        this(new BigDecimal(longitude), new BigDecimal(latitude));
+    }
 }
