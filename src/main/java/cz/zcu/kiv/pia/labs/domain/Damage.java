@@ -62,6 +62,18 @@ public class Damage {
         return insured;
     }
 
+    public User getImpaired() {
+        return impaired;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
     public String getDescription() {
         return description;
     }

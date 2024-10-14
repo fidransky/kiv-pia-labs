@@ -18,4 +18,12 @@ public class Location {
     public Location(String longitude, String latitude) {
         this(new BigDecimal(longitude), new BigDecimal(latitude));
     }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
 }

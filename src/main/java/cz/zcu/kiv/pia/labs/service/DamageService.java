@@ -16,7 +16,7 @@ public interface DamageService {
      * @param location location where the damage took place
      * @param description description of the damage
      */
-    void create(User impaired, Instant timestamp, Location location, String description);
+    Damage create(User impaired, Instant timestamp, Location location, String description);
 
     /**
      * Retrieves {@link Damage} reported by current {@link User}.

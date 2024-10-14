@@ -18,12 +18,12 @@ public class DefaultDamageService implements DamageService {
     }
 
     @Override
-    public void create(User impaired, Instant timestamp, Location location, String description) {
+    public Damage create(User impaired, Instant timestamp, Location location, String description) {
         var currentUser = userService.getCurrentUser();
 
         var damage = currentUser.reportDamage(impaired, timestamp, location, description);
 
-        damageRepository.create(damage);
+        return damageRepository.create(damage);
     }
 
     // TODO: check that user is in role INSURED (i.e. authorization)
