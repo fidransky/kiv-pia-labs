@@ -52,6 +52,12 @@
             <version>2.8</version>
         </dependency>
         <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java-extended-scalars</artifactId>
+            <version>22.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -102,6 +108,13 @@
                     <mode>server</mode>
                     <packageName>cz.zcu.kiv.pia.labs.graphql</packageName>
                     <schemaFileFolder>${project.basedir}/src/main/resources/graphql</schemaFileFolder>
+                    <customScalars>
+                        <customScalar>
+                            <graphQLTypeName>DateTime</graphQLTypeName>
+                            <javaType>java.time.OffsetDateTime</javaType>
+                            <graphQLScalarTypeStaticField>graphql.scalars.ExtendedScalars.DateTime</graphQLScalarTypeStaticField>
+                        </customScalar>
+                    </customScalars>
                 </configuration>
                 <executions>
                     <execution>
