@@ -12,7 +12,8 @@
   "dependencies": {
     "pia-labs-typescript-client": "file:../pia-labs-typescript-client/target/generated-sources/openapi",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
