@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "pia-labs-typescript-client": "file:../pia-labs-typescript-client/target/generated-sources/openapi",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
