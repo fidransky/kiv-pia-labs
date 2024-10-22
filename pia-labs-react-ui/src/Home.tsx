@@ -1,17 +1,14 @@
-import { Configuration, DamageApi, DamageDTO } from 'pia-labs-typescript-client';
 import React from 'react';
-
-const basePath = 'http://localhost:8080'
-const configuration = new Configuration({ basePath })
-const damageApi = new DamageApi(configuration)
+import { retrieveDamage } from './services/DamageService';
+import { Damage } from './types';
 
 function Home() {
-	const [ damages, setDamages ] = React.useState<DamageDTO[]>([])
+	const [ damages, setDamages ] = React.useState<Damage[]>([])
 
 	// ...
 
 	React.useEffect(() => {
-		damageApi.retrieveDamage()
+		retrieveDamage()
 			.then((damages) => {
 					setDamages(damages)
 			})
