@@ -16,6 +16,17 @@
     <ul th:unless="${#lists.isEmpty(damageList)}" th:each="damage : ${damageList}">
         <li th:text="${damage.description}"></li>
     </ul>
+
+    <h2>Report damage</h2>
+
+    <form method="post" th:action="@{/}" th:object="${newDamage}">
+        <div class="mb-3">
+            <label for="descriptionField" class="form-label">What happened?</label>
+            <input type="text" th:field="*{description}" class="form-control" id="descriptionField">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </main>
 </body>
 </html>
