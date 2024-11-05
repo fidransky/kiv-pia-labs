@@ -1,8 +1,9 @@
 package cz.zcu.kiv.pia.labs.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Location {
+public class Location implements Serializable {
     private final BigDecimal longitude;
     private final BigDecimal latitude;
 

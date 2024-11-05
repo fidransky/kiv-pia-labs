@@ -1,9 +1,10 @@
 package cz.zcu.kiv.pia.labs.domain;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
-public class User {
+public class User implements Serializable {
     private final UUID id;
     private String name;
     private String emailAddress;

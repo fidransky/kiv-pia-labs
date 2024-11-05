@@ -1,9 +1,10 @@
 package cz.zcu.kiv.pia.labs.domain;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
-public class Damage {
+public class Damage implements Serializable {
     private final UUID id;
     private User insured;
     private User impaired;
