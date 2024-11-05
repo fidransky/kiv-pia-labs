@@ -29,4 +29,12 @@ public class User {
 
         return new Damage(this, impaired, timestamp, location, description);
     }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
