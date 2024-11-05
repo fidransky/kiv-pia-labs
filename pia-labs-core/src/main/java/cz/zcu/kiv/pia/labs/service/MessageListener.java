@@ -1,8 +1,10 @@
 package cz.zcu.kiv.pia.labs.service;
 
+import cz.zcu.kiv.pia.labs.domain.Damage;
 import cz.zcu.kiv.pia.labs.event.DamageReportedEvent;
 import org.slf4j.Logger;
 import org.springframework.context.event.EventListener;
+import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +30,12 @@ public class MessageListener {
         var destination = "kiv.pia.labs.damage.%s".formatted(reportedDamage.getId());
 
         jmsTemplate.convertAndSend(destination, reportedDamage);
+    }
+
+    @JmsListener(destination = "kiv.pia.labs.damage.*")
+    public void listenForReportedDamageMessage(Damage reportedDamage) {
+        LOG.info("Received message about newly reported damage {}", reportedDamage);
+
+        messageSender.sendReportedDamageMessage(reportedDamage.getImpaired(), reportedDamage.getId());
     }
 }
