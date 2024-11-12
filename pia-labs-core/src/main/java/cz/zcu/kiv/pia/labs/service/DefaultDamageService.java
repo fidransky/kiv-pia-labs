@@ -8,10 +8,12 @@ import cz.zcu.kiv.pia.labs.repository.DamageRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.lang.NonNull;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Collection;
 
+@Transactional(readOnly = true)
 public class DefaultDamageService implements DamageService, ApplicationEventPublisherAware {
     private final UserService userService;
     private final DamageRepository damageRepository;
@@ -28,6 +30,7 @@ public class DefaultDamageService implements DamageService, ApplicationEventPubl
     }
 
     @Override
+    @Transactional
     public Damage create(User impaired, Instant timestamp, Location location, String description) {
         var currentUser = userService.getCurrentUser();
 
