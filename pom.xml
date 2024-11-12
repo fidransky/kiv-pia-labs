@@ -20,6 +20,7 @@
         <module>pia-labs-ws</module>
         <module>pia-labs-typescript-client</module>
         <module>pia-labs-ui</module>
+        <module>pia-labs-repository-jdbctemplate</module>
     </modules>
 
     <properties>
