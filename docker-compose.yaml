@@ -1,0 +1,12 @@
+services:
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+  artemis:
+    image: apache/activemq-artemis:latest-alpine
+    ports:
+      - "61616:61616"
+      - "8161:8161"
