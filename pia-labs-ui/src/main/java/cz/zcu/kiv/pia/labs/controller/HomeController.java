@@ -5,6 +5,7 @@ import cz.zcu.kiv.pia.labs.domain.User;
 import cz.zcu.kiv.pia.labs.domain.UserRole;
 import cz.zcu.kiv.pia.labs.service.DamageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Controller
@@ -21,7 +23,12 @@ public class HomeController {
 
     @GetMapping
     public String listReportedDamage(Model model) {
-        model.addAttribute("damageList", damageService.retrieveReportedDamage());
+        try {
+            model.addAttribute("damageList", damageService.retrieveReportedDamage());
+        } catch (AccessDeniedException e) {
+            model.addAttribute("damageList", new ArrayList<>());
+        }
+
         model.addAttribute("newDamage", new DamageDTO(""));
 
         return "home";
