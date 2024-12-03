@@ -21,6 +21,7 @@
         <module>pia-labs-typescript-client</module>
         <module>pia-labs-ui</module>
         <module>pia-labs-repository-jdbctemplate</module>
+        <module>pia-labs-repository-jpa</module>
     </modules>
 
     <properties>

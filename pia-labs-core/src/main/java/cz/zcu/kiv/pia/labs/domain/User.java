@@ -2,6 +2,7 @@ package cz.zcu.kiv.pia.labs.domain;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 public class User implements Serializable {
@@ -31,11 +32,40 @@ public class User implements Serializable {
         return new Damage(this, impaired, timestamp, location, description);
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public String getEmailAddress() {
         return emailAddress;
     }
 
     public String getName() {
         return name;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", role=" + role +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(emailAddress, user.emailAddress) && role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, emailAddress, role);
     }
 }

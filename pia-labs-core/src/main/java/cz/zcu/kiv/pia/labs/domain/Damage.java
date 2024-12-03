@@ -2,6 +2,7 @@ package cz.zcu.kiv.pia.labs.domain;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Damage implements Serializable {
@@ -81,5 +82,29 @@ public class Damage implements Serializable {
 
     public DamageState getState() {
         return state;
+    }
+
+    @Override
+    public String toString() {
+        return "Damage{" +
+                "id=" + id +
+                ", insured=" + insured +
+                ", impaired=" + impaired +
+                ", timestamp=" + timestamp +
+                ", location=" + location +
+                ", description='" + description + '\'' +
+                ", state=" + state +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Damage damage)) return false;
+        return Objects.equals(id, damage.id) && Objects.equals(insured, damage.insured) && Objects.equals(impaired, damage.impaired) && Objects.equals(timestamp, damage.timestamp) && Objects.equals(location, damage.location) && Objects.equals(description, damage.description) && state == damage.state;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, insured, impaired, timestamp, location, description, state);
     }
 }

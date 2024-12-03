@@ -2,6 +2,7 @@ package cz.zcu.kiv.pia.labs.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Location implements Serializable {
     private final BigDecimal longitude;
@@ -26,5 +27,24 @@ public class Location implements Serializable {
 
     public BigDecimal getLatitude() {
         return latitude;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "longitude=" + longitude +
+                ", latitude=" + latitude +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Location location)) return false;
+        return Objects.equals(longitude, location.longitude) && Objects.equals(latitude, location.latitude);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(longitude, latitude);
     }
 }
