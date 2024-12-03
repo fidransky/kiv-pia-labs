@@ -8,6 +8,7 @@ import cz.zcu.kiv.pia.labs.repository.DamageRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
@@ -31,6 +32,7 @@ public class DefaultDamageService implements DamageService, ApplicationEventPubl
 
     @Override
     @Transactional
+    @Secured("ROLE_INSURED")
     public Damage create(User impaired, Instant timestamp, Location location, String description) {
         var currentUser = userService.getCurrentUser();
 
@@ -45,8 +47,8 @@ public class DefaultDamageService implements DamageService, ApplicationEventPubl
         return createdDamage;
     }
 
-    // TODO: check that user is in role INSURED (i.e. authorization)
     @Override
+    @Secured("ROLE_INSURED")
     public Collection<Damage> retrieveReportedDamage() {
         var currentUser = userService.getCurrentUser();
 
