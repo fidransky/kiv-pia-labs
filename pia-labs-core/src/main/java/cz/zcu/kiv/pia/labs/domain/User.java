@@ -1,11 +1,17 @@
 package cz.zcu.kiv.pia.labs.domain;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.UUID;
 
-public class User implements Serializable {
+public class User implements UserDetails, Serializable {
     private final UUID id;
     private String name;
     private String emailAddress;
@@ -46,6 +52,21 @@ public class User implements Serializable {
 
     public UserRole getRole() {
         return role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return getEmailAddress();
+    }
+
+    @Override
+    public String getPassword() {
+        return "password";
     }
 
     @Override

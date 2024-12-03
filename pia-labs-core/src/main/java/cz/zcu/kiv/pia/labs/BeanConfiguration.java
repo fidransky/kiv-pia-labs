@@ -5,14 +5,17 @@ import cz.zcu.kiv.pia.labs.repository.InMemoryDamageRepository;
 import cz.zcu.kiv.pia.labs.service.ConstantNumberService;
 import cz.zcu.kiv.pia.labs.service.DamageService;
 import cz.zcu.kiv.pia.labs.service.DefaultDamageService;
-import cz.zcu.kiv.pia.labs.service.MockUserService;
 import cz.zcu.kiv.pia.labs.service.NumberService;
 import cz.zcu.kiv.pia.labs.service.RandomNumberService;
+import cz.zcu.kiv.pia.labs.service.SpringSecurityUserService;
 import cz.zcu.kiv.pia.labs.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 import java.util.Random;
 import java.util.random.RandomGenerator;
@@ -38,7 +41,15 @@ public class BeanConfiguration {
 
     @Bean
     public UserService userService() {
-        return new MockUserService();
+        return new SpringSecurityUserService();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
+        var provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        return provider;
     }
 
     @Bean
