@@ -23,3 +23,18 @@ CREATE TABLE IF NOT EXISTS `damage` (
 ALTER TABLE `damage`
 ADD CONSTRAINT `FK_insured_user_id` FOREIGN KEY (`insured_user_id`) REFERENCES `user` (`id`),
 ADD CONSTRAINT `FK_impaired_user_id` FOREIGN KEY (`impaired_user_id`) REFERENCES `user` (`id`);
+
+CREATE TABLE IF NOT EXISTS `document` (
+  `id` UUID NOT NULL,
+  `damage_id` UUID NOT NULL,
+  `requestedAt` TIMESTAMP(3) NOT NULL,
+  `uploadedAt` TIMESTAMP(3) NULL,
+  `approvedAt` TIMESTAMP(3) NULL,
+  `description` VARCHAR(255) NOT NULL,
+  `state` TINYINT(1) NOT NULL,
+  `data` BLOB NULL,
+  PRIMARY KEY `id` (`id`)
+);
+
+ALTER TABLE `document`
+ADD CONSTRAINT `FK_damage_id` FOREIGN KEY (`damage_id`) REFERENCES `damage` (`id`);
