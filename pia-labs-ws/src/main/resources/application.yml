@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: pia-labs-mcp-server
+  ai:
+    mcp:
+      server:
+        name: pia-labs-mcp-server
+        version: 1.0.0
+        description: "PIA Labs MCP Server - Provides access to lab management functionality"
+        # Enable STDIO mode (for Claude Desktop and similar clients)
+        stdio:
+          enabled: true
+        # Enable SSE mode (for HTTP-based clients)
+        sse-message-endpoint: /mcp/message
+        # Enable change notifications for SSE clients
+        resource-change-notification: true
+        tool-change-notification: true
+        prompt-change-notification: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.ai: DEBUG
+    cz.zcu.kiv.pia: DEBUG
