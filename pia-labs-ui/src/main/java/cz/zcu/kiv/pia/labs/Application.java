@@ -11,7 +11,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 @SpringBootApplication
 // ServletComponentScan annotation makes Spring Framework scan classpath for plain Java servlets, filters and listeners too
-@ServletComponentScan
+// commented out so that HelloWorldServlet doesn't conflict with HelloWorldController
+//@ServletComponentScan
 public class Application {
     private static final Logger LOG = getLogger(Application.class);
 
