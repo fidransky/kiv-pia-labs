@@ -46,7 +46,11 @@ public class User {
     }
 
     public Project createProject(Locale targetLanguage, byte[] sourceFile) {
-        // TODO: check that this user is a CUSTOMER
+        // check that this user is a CUSTOMER
+        if (role != UserRole.CUSTOMER) {
+            throw new IllegalStateException("Only customers can create projects");
+        }
+
         // TODO: check that sourceFile is not empty but also not too big
 
         return new Project(this, targetLanguage, sourceFile);
