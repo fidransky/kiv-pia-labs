@@ -9,6 +9,8 @@ servers:
 tags:
   - name: Hello World
     description: blah
+  - name: Projects
+    description: API endpoints used for management of translation projects.
 paths:
   /hello:
     get:
@@ -35,3 +37,81 @@ paths:
           description: Not supported HTTP method.
         '406':
           description: Not acceptable response representation.
+
+  /projects:
+    post:
+      tags:
+        - Projects
+      summary: Creates a new project using the current user as the customer.
+      operationId: createProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProjectRequest"
+        required: true
+      responses:
+        '201':
+          description: Project was successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateProjectResponse"
+        '400':
+          description: Request body is not formatted correctly.
+        '403':
+          description: Current user is not authorized to create projects.
+        '405':
+          description: Unsupported HTTP method.
+        '406':
+          description: Not acceptable response representation.
+        '500':
+          description: Server error.
+components:
+  schemas:
+    CreateProjectRequest:
+      type: object
+      properties:
+        languageCode:
+          type: string
+          minLength: 2
+          maxLength: 2
+          example: DE
+        originalFile:
+          type: string
+          format: binary
+      required:
+        - languageCode
+        - originalFile
+
+    CreateProjectResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        languageCode:
+          type: string
+          minLength: 2
+          maxLength: 2
+          example: DE
+        originalFile:
+          type: string
+          format: binary
+        state:
+          type: string
+          enum:
+            - CREATED
+            - ASSIGNED
+            - COMPLETED
+            - APPROVED
+            - CLOSED
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - languageCode
+        - originalFile
+        - state
+        - createdAt
