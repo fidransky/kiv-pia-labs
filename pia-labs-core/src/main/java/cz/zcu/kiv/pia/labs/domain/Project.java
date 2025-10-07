@@ -70,6 +70,10 @@ public class Project {
     }
 
     //<editor-fold desc="getters" defaultstate="collapsed">
+    public UUID getId() {
+        return id;
+    }
+
     public User getCustomer() {
         return customer;
     }
