@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: KIV/PIA REST API
+  description: blah
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080/v1
+    description: Local development server
+tags:
+  - name: Hello World
+    description: blah
+paths:
+  /hello:
+    get:
+      tags:
+        - Hello World
+      summary: Says hello on behalf of given user
+      operationId: sayHello
+      parameters:
+        - name: from
+          in: query
+          description: blah
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Hello World from Pavel!
+        '405':
+          description: Not supported HTTP method.
+        '406':
+          description: Not acceptable response representation.

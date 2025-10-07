@@ -19,6 +19,7 @@
     <modules>
         <module>pia-labs-core</module>
         <module>pia-labs-ui</module>
+        <module>pia-labs-ws-rest</module>
     </modules>
 
     <properties>
