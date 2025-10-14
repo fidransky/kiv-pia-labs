@@ -1,5 +1,6 @@
 package cz.zcu.kiv.pia.labs.resolver;
 
+import cz.zcu.kiv.pia.labs.graphql.CreateProjectInput;
 import cz.zcu.kiv.pia.labs.graphql.ProjectDTO;
 import cz.zcu.kiv.pia.labs.mapper.ProjectMapper;
 import cz.zcu.kiv.pia.labs.service.ProjectService;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Controller;
 
 import java.util.Base64;
 import java.util.Locale;
-import java.util.Map;
 
 @Controller
 public class ProjectMutationResolver {
@@ -23,9 +23,9 @@ public class ProjectMutationResolver {
     }
 
     @MutationMapping
-    public ProjectDTO createProject(@Argument Map<String, String> input) {
-        String targetLanguage = input.get("targetLanguage");
-        String sourceFileBase64 = input.get("sourceFile");
+    public ProjectDTO createProject(@Argument CreateProjectInput input) {
+        String targetLanguage = input.getTargetLanguage();
+        String sourceFileBase64 = input.getSourceFile();
 
         Locale locale = Locale.forLanguageTag(targetLanguage);
         byte[] sourceFile = Base64.getDecoder().decode(sourceFileBase64);
