@@ -12,6 +12,7 @@
     <artifactId>pia-labs-ws-graphql</artifactId>
 
     <properties>
+        <graphql-java.version>24.0</graphql-java.version>
         <graphql-java-generator.version>3.0.1</graphql-java-generator.version>
     </properties>
 
@@ -28,6 +29,11 @@
             <groupId>com.graphql-java-generator</groupId>
             <artifactId>graphql-java-common-runtime</artifactId>
             <version>${graphql-java-generator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java-extended-scalars</artifactId>
+            <version>${graphql-java.version}</version>
         </dependency>
 
         <dependency>
@@ -53,6 +59,13 @@
                     <mode>server</mode>
                     <packageName>cz.zcu.kiv.pia.labs.graphql</packageName>
                     <schemaFileFolder>${project.basedir}/src/main/resources/graphql</schemaFileFolder>
+                    <customScalars>
+                        <customScalar>
+                            <graphQLTypeName>DateTime</graphQLTypeName>
+                            <javaType>java.time.OffsetDateTime</javaType>
+                            <graphQLScalarTypeStaticField>graphql.scalars.ExtendedScalars.DateTime</graphQLScalarTypeStaticField>
+                        </customScalar>
+                    </customScalars>
                 </configuration>
                 <executions>
                     <execution>

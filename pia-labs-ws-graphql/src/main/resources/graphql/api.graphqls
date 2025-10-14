@@ -1,3 +1,6 @@
+# Scalars represent leaves of a query. Except for the default ones (Int, Float, String, Boolean, ID), we can define our own.
+scalar DateTime
+
 type Query {
     greeting(name: String! = "Pavel"): String!
 }
