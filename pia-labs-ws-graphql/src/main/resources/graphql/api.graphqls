@@ -3,4 +3,39 @@ scalar DateTime
 
 type Query {
     greeting(name: String! = "Pavel"): String!
+    projects: [ProjectDTO!]!
+}
+
+type Mutation {
+    createProject(input: CreateProjectInput!): ProjectDTO!
+}
+
+type ProjectDTO {
+    id: ID!
+    customer: UserDTO!
+    translator: UserDTO
+    targetLanguage: String!
+    sourceFile: String!
+    translatedFile: String
+    state: ProjectStateDTO!
+    createdAt: DateTime!
+}
+
+type UserDTO {
+    id: ID!
+    name: String!
+    emailAddress: String!
+}
+
+enum ProjectStateDTO {
+    CREATED
+    ASSIGNED
+    COMPLETED
+    APPROVED
+    CLOSED
+}
+
+input CreateProjectInput {
+    targetLanguage: String!
+    sourceFile: String!
 }
