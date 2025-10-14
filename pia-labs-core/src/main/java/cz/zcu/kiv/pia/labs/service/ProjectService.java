@@ -2,6 +2,7 @@ package cz.zcu.kiv.pia.labs.service;
 
 import cz.zcu.kiv.pia.labs.domain.Project;
 
+import java.util.List;
 import java.util.Locale;
 
 public interface ProjectService {
@@ -12,6 +13,13 @@ public interface ProjectService {
      * @return newly created project
      */
     Project createProject(Locale targetLanguage, byte[] sourceFile);
+
+    /**
+     * Fetches all projects, no matter their state
+     *
+     * @return all projects
+     */
+    List<Project> getAllProjects();
 
     // other service methods here
 }

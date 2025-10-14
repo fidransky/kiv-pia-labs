@@ -4,6 +4,7 @@ import cz.zcu.kiv.pia.labs.domain.Project;
 import cz.zcu.kiv.pia.labs.domain.User;
 import cz.zcu.kiv.pia.labs.repository.ProjectRepository;
 
+import java.util.List;
 import java.util.Locale;
 
 public class DefaultProjectService implements ProjectService {
@@ -24,5 +25,12 @@ public class DefaultProjectService implements ProjectService {
         projectRepository.store(project);
 
         return project;
+    }
+
+    @Override
+    public List<Project> getAllProjects() {
+        List<Project> projects = projectRepository.getAll();
+
+        return projects;
     }
 }

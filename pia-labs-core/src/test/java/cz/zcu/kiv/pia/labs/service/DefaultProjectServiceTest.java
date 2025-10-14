@@ -11,12 +11,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -76,6 +79,31 @@ class DefaultProjectServiceTest {
 
             // verifications
             verify(userService).getCurrentUser();
+            verifyNoMoreInteractions(userService, projectRepository);
+        }
+    }
+
+    @Nested
+    class getProjects {
+        @Test
+        void shouldReturnAllProjects() {
+            // test data
+            User customer = User.createCustomer("John Doe", "john.doe@example.com");
+            Project project1 = customer.createProject(Locale.ENGLISH, "test content".getBytes());
+            Project project2 = customer.createProject(Locale.GERMAN, "test content".getBytes());
+
+            // mocks
+            when(projectRepository.getAll()).thenReturn(List.of(project1, project2));
+
+            // tested method
+            List<Project> projects = projectRepository.getAll();
+
+            // verifications
+            assertFalse(projects.isEmpty());
+            assertTrue(projects.contains(project1));
+            assertTrue(projects.contains(project2));
+
+            verify(projectRepository).getAll();
             verifyNoMoreInteractions(userService, projectRepository);
         }
     }

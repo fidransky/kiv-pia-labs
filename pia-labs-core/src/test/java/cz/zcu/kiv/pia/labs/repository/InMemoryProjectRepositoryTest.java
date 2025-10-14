@@ -6,10 +6,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class InMemoryProjectRepositoryTest {
     private ProjectRepository projectRepository;
@@ -31,6 +37,32 @@ class InMemoryProjectRepositoryTest {
             Project foundProject = projectRepository.findById(project.getId());
             assertNotNull(foundProject);
             assertEquals(project.getId(), foundProject.getId());
+        }
+    }
+
+    @Nested
+    class getAll {
+        @Test
+        void shouldReturnZeroProjects() {
+            List<Project> projects = projectRepository.getAll();
+
+            assertTrue(projects.isEmpty());
+        }
+
+        @Test
+        void shouldReturnAllProjects() {
+            User customer = User.createCustomer("John Doe", "john.doe@example.com");
+            Project project1 = customer.createProject(Locale.ENGLISH, "test content".getBytes());
+            projectRepository.store(project1);
+
+            Project project2 = customer.createProject(Locale.GERMAN, "test content".getBytes());
+            projectRepository.store(project2);
+
+            List<Project> projects = projectRepository.getAll();
+
+            assertFalse(projects.isEmpty());
+            assertTrue(projects.contains(project1));
+            assertTrue(projects.contains(project2));
         }
     }
 
