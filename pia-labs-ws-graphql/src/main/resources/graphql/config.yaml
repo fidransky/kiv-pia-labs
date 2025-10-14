@@ -1,0 +1,28 @@
+spectaql:
+  oneFile: true
+  targetDir: ../static
+  logoUrl: "https://www.kiv.zcu.cz/cs/assets/logo.svg"
+
+introspection:
+  schemaFile: ./api.graphqls
+  queryNameStrategy: capitalizeFirst
+  fieldExpansionDepth: 2
+
+info:
+  title: KIV/PIA Labs GraphQL API Reference
+  description: blah
+  contact:
+    name: API Support
+    url: https://github.com/fidransky/kiv-pia-labs
+    email: pfidrans@kiv.zcu.cz
+
+servers:
+  - url: http://localhost:8080/graphql
+    description: Development
+  - url: https://example.com/graphql
+    description: Production
+    production: true
+    headers:
+      - name: Authorization
+        example: Bearer <YOUR_TOKEN_HERE>
+        comment: Your foo from bar

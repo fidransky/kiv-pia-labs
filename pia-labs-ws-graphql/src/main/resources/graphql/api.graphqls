@@ -2,40 +2,130 @@
 scalar DateTime
 
 type Query {
+    """
+    Returns a greeting message with the provided name
+    """
     greeting(name: String! = "Pavel"): String!
+
+    """
+    Returns all projects in the system
+    """
     projects: [ProjectDTO!]!
 }
 
 type Mutation {
+    """
+    Creates a new translation project
+    """
     createProject(input: CreateProjectInput!): ProjectDTO!
 }
 
+"""
+Represents a translation project in the system
+"""
 type ProjectDTO {
+    """
+    Unique identifier of the project
+    """
     id: ID!
+
+    """
+    Customer who requested the translation
+    """
     customer: UserDTO!
+
+    """
+    Translator assigned to the project (optional)
+    """
     translator: UserDTO
+
+    """
+    Target language for the translation (language tag format)
+    """
     targetLanguage: String!
+
+    """
+    Base64 encoded source file content
+    """
     sourceFile: String!
+
+    """
+    Base64 encoded translated file content (available after completion)
+    """
     translatedFile: String
+
+    """
+    Current state of the project
+    """
     state: ProjectStateDTO!
+
+    """
+    When the project was created
+    """
     createdAt: DateTime!
 }
 
+"""
+Represents a user in the system (customer or translator)
+"""
 type UserDTO {
+    """
+    Unique identifier of the user
+    """
     id: ID!
+
+    """
+    Full name of the user
+    """
     name: String!
+
+    """
+    Email address of the user
+    """
     emailAddress: String!
 }
 
+"""
+Possible states of a translation project
+"""
 enum ProjectStateDTO {
+    """
+    Project has been created but not yet assigned
+    """
     CREATED
+
+    """
+    Project has been assigned to a translator
+    """
     ASSIGNED
+
+    """
+    Translation work has been completed
+    """
     COMPLETED
+
+    """
+    Project has been approved by the customer
+    """
     APPROVED
+
+    """
+    Project is closed and archived
+    """
     CLOSED
 }
 
+"""
+Input for creating a new translation project
+"""
 input CreateProjectInput {
+    """
+    Target language for the translation (language tag format, e.g., 'en-US', 'de-DE')
+    """
     targetLanguage: String!
+
+    """
+    Base64 encoded source file content to be translated
+    """
     sourceFile: String!
 }
