@@ -7,11 +7,12 @@ spring:
         name: pia-labs-mcp-server
         version: 1.0.0
         description: "PIA Labs MCP Server - Provides access to lab management functionality"
+        protocol: STREAMABLE
         # Enable STDIO mode (for Claude Desktop and similar clients)
-        stdio:
-          enabled: true
+        #stdio:
+        #  enabled: true
         # Enable SSE mode (for HTTP-based clients)
-        sse-message-endpoint: /mcp/message
+        #sse-message-endpoint: /mcp/message
         # Enable change notifications for SSE clients
         resource-change-notification: true
         tool-change-notification: true
