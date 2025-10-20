@@ -24,6 +24,14 @@ public class SpringSecurityUserService implements UserService, UserDetailsServic
 
         var user1 = new User(UUID.randomUUID(), "John Doe", "john.doe@example.com", UserRole.INSURED);
         this.repo.put(user1.getUsername(), user1);
+
+        var user2 = new User(
+                UUID.fromString("00000000-0000-0000-0000-000000000001"), // Fixed UUID for AI assistant
+                "AI Assistant",
+                "ai-assistant@mcp.internal",
+                UserRole.INSURED // Set proper user role
+        );
+        this.repo.put(user2.getUsername(), user2);
     }
 
     @Override
