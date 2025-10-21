@@ -21,6 +21,7 @@
         <module>pia-labs-ui</module>
         <module>pia-labs-ws-rest</module>
         <module>pia-labs-ws-graphql</module>
+        <module>pia-labs-ws-mcp</module>
     </modules>
 
     <properties>
