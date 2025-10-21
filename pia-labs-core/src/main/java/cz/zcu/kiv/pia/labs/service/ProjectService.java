@@ -4,6 +4,8 @@ import cz.zcu.kiv.pia.labs.domain.Project;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 
 public interface ProjectService {
     /**
@@ -20,6 +22,15 @@ public interface ProjectService {
      * @return all projects
      */
     List<Project> getAllProjects();
+
+    /**
+     * Fetches project by its ID.
+     *
+     * @param id unique ID of the project
+     * @return project with the given ID
+     * @throws NoSuchElementException if no project with the given ID exists
+     */
+    Project getProjectById(UUID id);
 
     // other service methods here
 }

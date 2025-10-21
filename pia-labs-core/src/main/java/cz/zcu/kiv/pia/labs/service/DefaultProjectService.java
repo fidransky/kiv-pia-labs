@@ -6,6 +6,8 @@ import cz.zcu.kiv.pia.labs.repository.ProjectRepository;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.UUID;
 
 public class DefaultProjectService implements ProjectService {
     private final UserService userService;
@@ -32,5 +34,12 @@ public class DefaultProjectService implements ProjectService {
         List<Project> projects = projectRepository.getAll();
 
         return projects;
+    }
+
+    @Override
+    public Project getProjectById(UUID id) {
+        Project project = projectRepository.findById(id);
+
+        return Optional.ofNullable(project).orElseThrow();
     }
 }

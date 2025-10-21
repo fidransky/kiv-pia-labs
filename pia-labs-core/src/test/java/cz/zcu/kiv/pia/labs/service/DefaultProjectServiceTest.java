@@ -13,6 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -104,6 +106,39 @@ class DefaultProjectServiceTest {
             assertTrue(projects.contains(project2));
 
             verify(projectRepository).getAll();
+            verifyNoMoreInteractions(userService, projectRepository);
+        }
+    }
+
+    @Nested
+    class getProjectById {
+        @Test
+        void shouldThrowExceptionWhenProjectNotFound() {
+            UUID nonExistentId = UUID.randomUUID();
+
+            // tested method and verifications
+            assertThrows(NoSuchElementException.class, () -> projectService.getProjectById(nonExistentId));
+
+            verify(projectRepository).findById(nonExistentId);
+            verifyNoMoreInteractions(userService, projectRepository);
+        }
+
+        @Test
+        void shouldReturnStoredProject() {
+            // test data
+            User customer = User.createCustomer("John Doe", "john.doe@example.com");
+            Project project = customer.createProject(Locale.ENGLISH, "test content".getBytes());
+
+            // mocks
+            when(projectRepository.findById(project.getId())).thenReturn(project);
+
+            // tested method
+            Project actualProject = projectService.getProjectById(project.getId());
+
+            // verifications
+            assertEquals(project, actualProject);
+
+            verify(projectRepository).findById(project.getId());
             verifyNoMoreInteractions(userService, projectRepository);
         }
     }
