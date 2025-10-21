@@ -96,7 +96,7 @@ class DefaultProjectServiceTest {
             when(projectRepository.getAll()).thenReturn(List.of(project1, project2));
 
             // tested method
-            List<Project> projects = projectRepository.getAll();
+            List<Project> projects = projectService.getAllProjects();
 
             // verifications
             assertFalse(projects.isEmpty());
