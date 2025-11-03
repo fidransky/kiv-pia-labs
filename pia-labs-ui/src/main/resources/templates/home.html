@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Projects - KIV/PIA Labs</title>
+</head>
+<body>
+    <section>
+        <h1 class="mb-4">Translation Projects</h1>
+
+        <!-- Alert Messages -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>
+            <span th:text="${successMessage}">Success message</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            <span th:text="${errorMessage}">Error message</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- Create New Project Form -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    Create New Translation Project
+                </h5>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/projects}" th:object="${createProjectVO}" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="targetLanguage" class="form-label">Target Language</label>
+                                <select class="form-select" id="targetLanguage" th:field="*{targetLanguage}" required>
+                                    <option value="">Select target language...</option>
+                                    <option th:each="lang : ${availableLanguages}"
+                                            th:value="${lang.code}"
+                                            th:text="${lang.name}">Language</option>
+                                </select>
+                                <div class="form-text">Choose the language you want your document translated to.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="sourceFile" class="form-label">Source File</label>
+                                <input class="form-control" type="file" id="sourceFile" th:field="*{sourceFile}" required
+                                       accept=".txt,.doc,.docx,.pdf">
+                                <div class="form-text">Upload the document you want to translate (max 10MB).</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-plus-circle me-2"></i>
+                                Create Project
+                            </button>
+                            <button type="reset" class="btn btn-outline-secondary ms-2">
+                                <i class="bi bi-arrow-clockwise me-2"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Projects List -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-list-ul me-2"></i>
+                    All Projects
+                    <span class="badge bg-secondary ms-2" th:text="${#lists.size(projects)}">0</span>
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div th:if="${#lists.isEmpty(projects)}" class="p-4 text-center text-muted">
+                    <i class="bi bi-inbox display-4 text-muted mb-3"></i>
+                    <p class="mb-0">No projects found. Create your first translation project above!</p>
+                </div>
+
+                <div th:if="${!#lists.isEmpty(projects)}" class="table-responsive">
+                    <table class="table table-striped table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Translator</th>
+                                <th scope="col">Target Language</th>
+                                <th scope="col">State</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Files</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="project : ${projects}">
+                                <td>
+                                    <code class="text-muted small" th:text="${#strings.substring(project.id.toString(), 0, 8) + '...'}">12345678...</code>
+                                </td>
+                                <td>
+                                    <div th:if="${project.customer != null}">
+                                        <strong th:text="${project.customer.name}">Customer Name</strong>
+                                        <br>
+                                        <small class="text-muted" th:text="${project.customer.emailAddress}">customer@example.com</small>
+                                    </div>
+                                    <span th:if="${project.customer == null}" class="text-muted">-</span>
+                                </td>
+                                <td>
+                                    <div th:if="${project.translator != null}">
+                                        <strong th:text="${project.translator.name}">Translator Name</strong>
+                                        <br>
+                                        <small class="text-muted" th:text="${project.translator.emailAddress}">translator@example.com</small>
+                                    </div>
+                                    <span th:if="${project.translator == null}" class="text-muted">Not assigned</span>
+                                </td>
+                                <td>
+                                    <span th:text="${project.targetLanguage.displayName}">English</span>
+                                    <br>
+                                    <small class="text-muted" th:text="${project.targetLanguage.language}">en</small>
+                                </td>
+                                <td>
+                                    <span th:if="${project.state == 'CREATED'}" class="badge bg-secondary" th:text="${project.state}">CREATED</span>
+                                    <span th:if="${project.state == 'ASSIGNED'}" class="badge bg-info" th:text="${project.state}">ASSIGNED</span>
+                                    <span th:if="${project.state == 'COMPLETED'}" class="badge bg-warning" th:text="${project.state}">COMPLETED</span>
+                                    <span th:if="${project.state == 'APPROVED'}" class="badge bg-success" th:text="${project.state}">APPROVED</span>
+                                    <span th:if="${project.state == 'CLOSED'}" class="badge bg-dark" th:text="${project.state}">CLOSED</span>
+                                    <span th:if="${project.state != 'CREATED' && project.state != 'ASSIGNED' && project.state != 'COMPLETED' && project.state != 'APPROVED' && project.state != 'CLOSED'}" class="badge bg-light text-dark" th:text="${project.state}">UNKNOWN</span>
+                                </td>
+                                <td>
+                                    <span th:text="${#temporals.format(project.createdAt, 'yyyy-MM-dd HH:mm')}">2023-01-01 12:00</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-1">
+                                        <span th:if="${project.hasSourceFile}" class="badge bg-primary">Source</span>
+                                        <span th:if="${project.hasTranslatedFile}" class="badge bg-success">Translated</span>
+                                        <span th:if="${!project.hasSourceFile && !project.hasTranslatedFile}" class="text-muted">-</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
