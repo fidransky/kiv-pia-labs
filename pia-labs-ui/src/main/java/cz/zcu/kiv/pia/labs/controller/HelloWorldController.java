@@ -37,6 +37,9 @@ public class HelloWorldController {
         // add message to model
         model.addAttribute("message", message);
 
+        // add other model attributes
+        model.addAttribute("from", from);
+
         return "greeting";
     }
 

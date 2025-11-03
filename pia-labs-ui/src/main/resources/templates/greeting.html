@@ -37,9 +37,9 @@
                         <a class="nav-link disabled">Disabled</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                <form method="GET" th:action="@{/hello}" class="d-flex">
+                    <input class="form-control me-2" type="text" name="from" th:value="${from}" placeholder="Who's greeting?" aria-label="Who's greeting?">
+                    <button class="btn btn-outline-success text-nowrap" type="submit">Say hello</button>
                 </form>
             </div>
         </div>
