@@ -6,6 +6,7 @@ import cz.zcu.kiv.pia.labs.repository.ProjectRepository;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,5 +42,18 @@ public class DefaultProjectService implements ProjectService {
         Project project = projectRepository.findById(id);
 
         return Optional.ofNullable(project).orElseThrow();
+    }
+
+    @Override
+    public void completeProject(UUID id, byte[] translatedFile) {
+        Project project = projectRepository.findById(id);
+        if (project == null) {
+            throw new NoSuchElementException();
+        }
+
+        User user = project.getTranslator();
+        user.completeProject(project, translatedFile);
+
+        projectRepository.store(project);
     }
 }

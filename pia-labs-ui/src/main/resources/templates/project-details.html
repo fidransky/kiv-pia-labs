@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Project Details - KIV/PIA Labs</title>
+</head>
+<body>
+    <section>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0">Project Details</h1>
+            <a th:href="@{/}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-2"></i>
+                Back to Projects
+            </a>
+        </div>
+
+        <!-- Project Overview Card -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Project Overview
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-3">General Information</h6>
+                        <table class="table table-borderless">
+                            <tr>
+                                <th scope="row" class="w-50">Project ID:</th>
+                                <td><code th:text="${project.id}">12345678-1234-1234-1234-123456789012</code></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Status:</th>
+                                <td>
+                                    <span th:if="${project.state == 'CREATED'}" class="badge bg-secondary" th:text="${project.state}">CREATED</span>
+                                    <span th:if="${project.state == 'ASSIGNED'}" class="badge bg-info" th:text="${project.state}">ASSIGNED</span>
+                                    <span th:if="${project.state == 'COMPLETED'}" class="badge bg-warning" th:text="${project.state}">COMPLETED</span>
+                                    <span th:if="${project.state == 'APPROVED'}" class="badge bg-success" th:text="${project.state}">APPROVED</span>
+                                    <span th:if="${project.state == 'CLOSED'}" class="badge bg-dark" th:text="${project.state}">CLOSED</span>
+                                    <span th:if="${project.state != 'CREATED' && project.state != 'ASSIGNED' && project.state != 'COMPLETED' && project.state != 'APPROVED' && project.state != 'CLOSED'}" class="badge bg-light text-dark" th:text="${project.state}">UNKNOWN</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Created At:</th>
+                                <td>
+                                    <i class="bi bi-calendar-event me-2"></i>
+                                    <span th:text="${#temporals.format(project.createdAt, 'EEEE, MMMM d, yyyy')}">Monday, January 1, 2023</span>
+                                    <br>
+                                    <small class="text-muted">
+                                        <i class="bi bi-clock me-2"></i>
+                                        <span th:text="${#temporals.format(project.createdAt, 'HH:mm:ss')}">12:00:00</span>
+                                    </small>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-3">Translation Details</h6>
+                        <table class="table table-borderless">
+                            <tr>
+                                <th scope="row" class="w-50">Target Language:</th>
+                                <td>
+                                    <strong th:text="${project.targetLanguage.displayName}">English</strong>
+                                    <br>
+                                    <small class="text-muted">
+                                        Code: <code th:text="${project.targetLanguage.language}">en</code>
+                                    </small>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Files:</th>
+                                <td>
+                                    <div class="d-flex flex-column gap-2">
+                                        <div th:if="${project.hasSourceFile}">
+                                            <span class="badge bg-primary">
+                                                <i class="bi bi-file-earmark-text me-1"></i>
+                                                Source File Available
+                                            </span>
+                                        </div>
+                                        <div th:if="${!project.hasSourceFile}">
+                                            <span class="badge bg-secondary">
+                                                <i class="bi bi-file-earmark-x me-1"></i>
+                                                No Source File
+                                            </span>
+                                        </div>
+                                        <div th:if="${project.hasTranslatedFile}">
+                                            <span class="badge bg-success">
+                                                <i class="bi bi-file-earmark-check me-1"></i>
+                                                Translated File Available
+                                            </span>
+                                        </div>
+                                        <div th:if="${!project.hasTranslatedFile}">
+                                            <span class="badge bg-secondary">
+                                                <i class="bi bi-file-earmark-x me-1"></i>
+                                                No Translated File
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Information Card -->
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-person-circle me-2"></i>
+                    Customer Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <div th:if="${project.customer != null}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <th scope="row" class="w-50">Name:</th>
+                                    <td><strong th:text="${project.customer.name}">Customer Name</strong></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Email:</th>
+                                    <td>
+                                        <a th:href="'mailto:' + ${project.customer.emailAddress}" th:text="${project.customer.emailAddress}">
+                                            customer@example.com
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Role:</th>
+                                    <td>
+                                        <span class="badge bg-primary" th:text="${project.customer.role}">CUSTOMER</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <th scope="row" class="w-50">User ID:</th>
+                                    <td><code class="small" th:text="${project.customer.id}">12345678-1234-1234-1234-123456789012</code></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Languages:</th>
+                                    <td>
+                                        <div th:if="${project.customer.languages != null && !#lists.isEmpty(project.customer.languages)}" class="d-flex flex-wrap gap-1">
+                                            <span th:each="lang : ${project.customer.languages}" class="badge bg-secondary" th:text="${lang.displayName}">Language</span>
+                                        </div>
+                                        <span th:if="${project.customer.languages == null || #lists.isEmpty(project.customer.languages)}" class="text-muted">No languages specified</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Member Since:</th>
+                                    <td>
+                                        <span th:text="${#temporals.format(project.customer.createdAt, 'yyyy-MM-dd HH:mm')}">2023-01-01 12:00</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${project.customer == null}" class="text-center text-muted py-3">
+                    <i class="bi bi-person-x display-4"></i>
+                    <p class="mb-0 mt-2">No customer assigned to this project</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Translator Information Card -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-translate me-2"></i>
+                    Translator Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <div th:if="${project.translator != null}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <th scope="row" class="w-50">Name:</th>
+                                    <td><strong th:text="${project.translator.name}">Translator Name</strong></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Email:</th>
+                                    <td>
+                                        <a th:href="'mailto:' + ${project.translator.emailAddress}" th:text="${project.translator.emailAddress}">
+                                            translator@example.com
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Role:</th>
+                                    <td>
+                                        <span class="badge bg-success" th:text="${project.translator.role}">TRANSLATOR</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <th scope="row" class="w-50">User ID:</th>
+                                    <td><code class="small" th:text="${project.translator.id}">12345678-1234-1234-1234-123456789012</code></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Languages:</th>
+                                    <td>
+                                        <div th:if="${project.translator.languages != null && !#lists.isEmpty(project.translator.languages)}" class="d-flex flex-wrap gap-1">
+                                            <span th:each="lang : ${project.translator.languages}" class="badge bg-secondary" th:text="${lang.displayName}">Language</span>
+                                        </div>
+                                        <span th:if="${project.translator.languages == null || #lists.isEmpty(project.translator.languages)}" class="text-muted">No languages specified</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Member Since:</th>
+                                    <td>
+                                        <span th:text="${#temporals.format(project.translator.createdAt, 'yyyy-MM-dd HH:mm')}">2023-01-01 12:00</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${project.translator == null}" class="text-center text-muted py-3">
+                    <i class="bi bi-person-x display-4"></i>
+                    <p class="mb-0 mt-2">No translator assigned to this project yet</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex gap-2 align-items-center">
+            <a th:href="@{/}" class="btn btn-primary">
+                <i class="bi bi-arrow-left me-2"></i>
+                Back to Projects
+            </a>
+
+            <!-- Mark Complete Button - only shown for non-completed projects -->
+            <form th:if="${project.state == 'CREATED' || project.state == 'ASSIGNED'}" 
+                  th:action="@{/projects/{id}/complete(id=${project.id})}" 
+                  method="post" 
+                  class="d-inline"
+                  onsubmit="return confirm('Are you sure you want to mark this project as complete? This will use mock translator and translated file data.');">
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Mark Complete (Mock)
+                </button>
+            </form>
+
+            <!-- Completed indicator -->
+            <div th:if="${project.state == 'COMPLETED' || project.state == 'APPROVED' || project.state == 'CLOSED'}" 
+                 class="alert alert-success mb-0 py-2 px-3">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                <strong>Project Completed</strong>
+            </div>
+
+            <button type="button" class="btn btn-outline-secondary" disabled>
+                <i class="bi bi-pencil me-2"></i>
+                Edit Project
+            </button>
+            <button type="button" class="btn btn-outline-danger" disabled>
+                <i class="bi bi-trash me-2"></i>
+                Delete Project
+            </button>
+        </div>
+    </section>
+</body>
+</html>

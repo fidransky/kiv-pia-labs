@@ -32,5 +32,13 @@ public interface ProjectService {
      */
     Project getProjectById(UUID id);
 
+    /**
+     * Marks the project with the given ID as completed.
+     *
+     * @param id unique ID of the project to be completed
+     * @param translatedFile translated file to be stored with the project
+     */
+    void completeProject(UUID id, byte[] translatedFile);
+
     // other service methods here
 }

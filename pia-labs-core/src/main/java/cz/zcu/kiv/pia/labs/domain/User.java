@@ -56,6 +56,19 @@ public class User {
         return new Project(this, targetLanguage, sourceFile);
     }
 
+    public void completeProject(Project project, byte[] translatedFile) {
+        // check that this user is a TRANSLATOR
+        if (role != UserRole.TRANSLATOR) {
+            throw new IllegalStateException("Only translators can complete projects");
+        }
+
+        if (translatedFile == null || translatedFile.length == 0) {
+            throw new IllegalArgumentException("Translated file cannot be empty");
+        }
+
+        project.complete(translatedFile);
+    }
+
     //<editor-fold desc="getters" defaultstate="collapsed">
     public UUID getId() {
         return id;

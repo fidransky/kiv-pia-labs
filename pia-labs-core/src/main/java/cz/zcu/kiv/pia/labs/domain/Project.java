@@ -102,4 +102,8 @@ public class Project {
         return createdAt;
     }
     //</editor-fold>
+
+    public boolean isCompleted() {
+        return state == ProjectState.COMPLETED;
+    }
 }

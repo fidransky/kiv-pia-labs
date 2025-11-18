@@ -94,6 +94,7 @@
                                 <th scope="col">State</th>
                                 <th scope="col">Created</th>
                                 <th scope="col">Files</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,6 +140,12 @@
                                         <span th:if="${project.hasTranslatedFile}" class="badge bg-success">Translated</span>
                                         <span th:if="${!project.hasSourceFile && !project.hasTranslatedFile}" class="text-muted">-</span>
                                     </div>
+                                </td>
+                                <td>
+                                    <a th:href="@{/projects/{id}(id=${project.id})}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye me-1"></i>
+                                        View Details
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

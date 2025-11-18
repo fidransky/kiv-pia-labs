@@ -142,4 +142,44 @@ class DefaultProjectServiceTest {
             verifyNoMoreInteractions(userService, projectRepository);
         }
     }
+
+    @Nested
+    class completeProject {
+        @Test
+        void shouldCompleteProject() {
+            // test data
+            var translator = User.createTranslator("John Doe", "john.doe@example.com", Collections.singleton(Locale.FRENCH));
+            var customer = User.createCustomer("Jane Doe", "jane.doe@example.com");
+            var project = customer.createProject(Locale.FRENCH, "test content".getBytes());
+            project.assignTranslator(translator);
+            var translatedFile = "translated content".getBytes();
+
+            // mocks
+            when(projectRepository.findById(project.getId())).thenReturn(project);
+
+            // tested method
+            projectService.completeProject(project.getId(), translatedFile);
+
+            // verifications
+            assertEquals(translatedFile, project.getTranslatedFile());
+            assertTrue(project.isCompleted());
+
+            verify(projectRepository).findById(project.getId());
+            verify(projectRepository).store(project);
+            verifyNoMoreInteractions(userService, projectRepository);
+        }
+
+        @Test
+        void shouldThrowExceptionWhenProjectNotFound() {
+            // test data
+            var translatedFile = "translated content".getBytes();
+            var nonExistentId = UUID.randomUUID();
+
+            // tested method and verifications
+            assertThrows(NoSuchElementException.class, () -> projectService.completeProject(nonExistentId, translatedFile));
+
+            verify(projectRepository).findById(nonExistentId);
+            verifyNoMoreInteractions(userService, projectRepository);
+        }
+    }
 }
