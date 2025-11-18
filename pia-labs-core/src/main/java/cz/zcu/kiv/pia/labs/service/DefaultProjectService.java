@@ -2,7 +2,9 @@ package cz.zcu.kiv.pia.labs.service;
 
 import cz.zcu.kiv.pia.labs.domain.Project;
 import cz.zcu.kiv.pia.labs.domain.User;
+import cz.zcu.kiv.pia.labs.event.ProjectCompletedEvent;
 import cz.zcu.kiv.pia.labs.repository.ProjectRepository;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.List;
 import java.util.Locale;
@@ -13,12 +15,12 @@ import java.util.UUID;
 public class DefaultProjectService implements ProjectService {
     private final UserService userService;
     private final ProjectRepository projectRepository;
-    private final MessageSender messageSender;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public DefaultProjectService(UserService userService, ProjectRepository projectRepository, MessageSender messageSender) {
+    public DefaultProjectService(UserService userService, ProjectRepository projectRepository, ApplicationEventPublisher eventPublisher) {
         this.userService = userService;
         this.projectRepository = projectRepository;
-        this.messageSender = messageSender;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -58,7 +60,7 @@ public class DefaultProjectService implements ProjectService {
 
         projectRepository.store(project);
 
-        // send a message to the customer
-        messageSender.sendProjectCompletedMessage(project);
+        // publish application event
+        eventPublisher.publishEvent(new ProjectCompletedEvent(project));
     }
 }

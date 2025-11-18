@@ -2,6 +2,7 @@ package cz.zcu.kiv.pia.labs.service;
 
 import cz.zcu.kiv.pia.labs.domain.Project;
 import cz.zcu.kiv.pia.labs.domain.User;
+import cz.zcu.kiv.pia.labs.event.ProjectCompletedEvent;
 import cz.zcu.kiv.pia.labs.repository.ProjectRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,13 +35,13 @@ class DefaultProjectServiceTest {
     @Mock
     private ProjectRepository projectRepository;
     @Mock
-    private MessageSender messageSender;
+    private ApplicationEventPublisher eventPublisher;
 
     private ProjectService projectService;
 
     @BeforeEach
     void setUp() {
-        this.projectService = new DefaultProjectService(userService, projectRepository, messageSender);
+        this.projectService = new DefaultProjectService(userService, projectRepository, eventPublisher);
     }
 
     @Nested
@@ -168,8 +170,8 @@ class DefaultProjectServiceTest {
 
             verify(projectRepository).findById(project.getId());
             verify(projectRepository).store(project);
-            verify(messageSender).sendProjectCompletedMessage(project);
-            verifyNoMoreInteractions(userService, projectRepository, messageSender);
+            verify(eventPublisher).publishEvent(new ProjectCompletedEvent(project));
+            verifyNoMoreInteractions(userService, projectRepository, eventPublisher);
         }
 
         @Test
@@ -182,7 +184,7 @@ class DefaultProjectServiceTest {
             assertThrows(NoSuchElementException.class, () -> projectService.completeProject(nonExistentId, translatedFile));
 
             verify(projectRepository).findById(nonExistentId);
-            verifyNoMoreInteractions(userService, projectRepository, messageSender);
+            verifyNoMoreInteractions(userService, projectRepository, eventPublisher);
         }
     }
 }
