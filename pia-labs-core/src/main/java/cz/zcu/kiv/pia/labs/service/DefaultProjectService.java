@@ -13,10 +13,12 @@ import java.util.UUID;
 public class DefaultProjectService implements ProjectService {
     private final UserService userService;
     private final ProjectRepository projectRepository;
+    private final MessageSender messageSender;
 
-    public DefaultProjectService(UserService userService, ProjectRepository projectRepository) {
+    public DefaultProjectService(UserService userService, ProjectRepository projectRepository, MessageSender messageSender) {
         this.userService = userService;
         this.projectRepository = projectRepository;
+        this.messageSender = messageSender;
     }
 
     @Override
@@ -55,5 +57,8 @@ public class DefaultProjectService implements ProjectService {
         user.completeProject(project, translatedFile);
 
         projectRepository.store(project);
+
+        // send a message to the customer
+        messageSender.sendProjectCompletedMessage(project);
     }
 }

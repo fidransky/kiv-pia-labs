@@ -3,6 +3,7 @@ package cz.zcu.kiv.pia.labs;
 import cz.zcu.kiv.pia.labs.repository.InMemoryProjectRepository;
 import cz.zcu.kiv.pia.labs.repository.ProjectRepository;
 import cz.zcu.kiv.pia.labs.service.DefaultProjectService;
+import cz.zcu.kiv.pia.labs.service.MailMessageSender;
 import cz.zcu.kiv.pia.labs.service.MockUserService;
 import cz.zcu.kiv.pia.labs.service.ProjectService;
 import cz.zcu.kiv.pia.labs.service.UserService;
@@ -30,7 +31,7 @@ public class CoreConfiguration {
     }
 
     @Bean
-    public ProjectService projectService(UserService userService, ProjectRepository projectRepository) {
-        return new DefaultProjectService(userService, projectRepository);
+    public ProjectService projectService(UserService userService, ProjectRepository projectRepository, MailMessageSender messageSender) {
+        return new DefaultProjectService(userService, projectRepository, messageSender);
     }
 }

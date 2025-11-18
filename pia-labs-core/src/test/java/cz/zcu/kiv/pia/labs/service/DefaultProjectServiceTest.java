@@ -32,12 +32,14 @@ class DefaultProjectServiceTest {
     private UserService userService;
     @Mock
     private ProjectRepository projectRepository;
+    @Mock
+    private MessageSender messageSender;
 
     private ProjectService projectService;
 
     @BeforeEach
     void setUp() {
-        this.projectService = new DefaultProjectService(userService, projectRepository);
+        this.projectService = new DefaultProjectService(userService, projectRepository, messageSender);
     }
 
     @Nested
@@ -166,7 +168,8 @@ class DefaultProjectServiceTest {
 
             verify(projectRepository).findById(project.getId());
             verify(projectRepository).store(project);
-            verifyNoMoreInteractions(userService, projectRepository);
+            verify(messageSender).sendProjectCompletedMessage(project);
+            verifyNoMoreInteractions(userService, projectRepository, messageSender);
         }
 
         @Test
@@ -179,7 +182,7 @@ class DefaultProjectServiceTest {
             assertThrows(NoSuchElementException.class, () -> projectService.completeProject(nonExistentId, translatedFile));
 
             verify(projectRepository).findById(nonExistentId);
-            verifyNoMoreInteractions(userService, projectRepository);
+            verifyNoMoreInteractions(userService, projectRepository, messageSender);
         }
     }
 }
