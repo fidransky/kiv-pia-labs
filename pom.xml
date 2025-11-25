@@ -23,6 +23,7 @@
         <module>pia-labs-ws-graphql</module>
         <module>pia-labs-ws-mcp</module>
         <module>pia-labs-typescript-client</module>
+        <module>pia-labs-repository-jdbc</module>
     </modules>
 
     <properties>
