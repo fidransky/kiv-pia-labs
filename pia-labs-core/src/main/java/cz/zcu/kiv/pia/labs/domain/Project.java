@@ -23,6 +23,18 @@ public class Project {
     }
 
     // constructor used when referencing the full object
+    public Project(UUID id, User customer, User translator, Locale targetLanguage, byte[] sourceFile, byte[] translatedFile, ProjectState state, Instant createdAt) {
+        this.id = id;
+        this.customer = customer;
+        this.translator = translator;
+        this.targetLanguage = targetLanguage;
+        this.sourceFile = sourceFile;
+        this.translatedFile = translatedFile;
+        this.state = state;
+        this.createdAt = createdAt;
+    }
+
+    // constructor used when creating a new object in business logic
     public Project(User customer, Locale targetLanguage, byte[] sourceFile) {
         this.id = UUID.randomUUID();
         this.customer = customer;
