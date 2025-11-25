@@ -1,7 +1,9 @@
 package cz.zcu.kiv.pia.labs.domain;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 // NOTE: setters are intentionally not provided for the sake of encapsulation
@@ -105,5 +107,30 @@ public class Project {
 
     public boolean isCompleted() {
         return state == ProjectState.COMPLETED;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Project project)) return false;
+        return Objects.equals(id, project.id) && Objects.equals(customer, project.customer) && Objects.equals(translator, project.translator) && Objects.equals(targetLanguage, project.targetLanguage) && Objects.deepEquals(sourceFile, project.sourceFile) && Objects.deepEquals(translatedFile, project.translatedFile) && state == project.state && Objects.equals(createdAt, project.createdAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, customer, translator, targetLanguage, Arrays.hashCode(sourceFile), Arrays.hashCode(translatedFile), state, createdAt);
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", translator=" + translator +
+                ", targetLanguage=" + targetLanguage +
+                ", sourceFile=" + Arrays.toString(sourceFile) +
+                ", translatedFile=" + Arrays.toString(translatedFile) +
+                ", state=" + state +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }

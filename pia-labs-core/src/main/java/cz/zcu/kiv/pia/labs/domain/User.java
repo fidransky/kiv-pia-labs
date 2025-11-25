@@ -3,6 +3,7 @@ package cz.zcu.kiv.pia.labs.domain;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -94,4 +95,28 @@ public class User {
         return createdAt;
     }
     //</editor-fold>
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(emailAddress, user.emailAddress) && role == user.role && Objects.equals(languages, user.languages) && Objects.equals(createdAt, user.createdAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, emailAddress, role, languages, createdAt);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", role=" + role +
+                ", languages=" + languages +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }
