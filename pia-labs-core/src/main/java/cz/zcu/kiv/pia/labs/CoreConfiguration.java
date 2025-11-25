@@ -1,6 +1,5 @@
 package cz.zcu.kiv.pia.labs;
 
-import cz.zcu.kiv.pia.labs.repository.InMemoryProjectRepository;
 import cz.zcu.kiv.pia.labs.repository.ProjectRepository;
 import cz.zcu.kiv.pia.labs.service.DefaultProjectService;
 import cz.zcu.kiv.pia.labs.service.MockUserService;
@@ -23,11 +22,6 @@ public class CoreConfiguration {
     @Bean
     public UserService userService() {
         return new MockUserService();
-    }
-
-    @Bean
-    public ProjectRepository projectRepository() {
-        return new InMemoryProjectRepository();
     }
 
     @Bean
