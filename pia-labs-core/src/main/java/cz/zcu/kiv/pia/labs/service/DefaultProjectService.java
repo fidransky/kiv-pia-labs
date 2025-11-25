@@ -5,6 +5,7 @@ import cz.zcu.kiv.pia.labs.domain.User;
 import cz.zcu.kiv.pia.labs.event.ProjectCompletedEvent;
 import cz.zcu.kiv.pia.labs.repository.ProjectRepository;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
@@ -12,6 +13,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
+@Transactional(readOnly = true)
 public class DefaultProjectService implements ProjectService {
     private final UserService userService;
     private final ProjectRepository projectRepository;
@@ -23,6 +25,7 @@ public class DefaultProjectService implements ProjectService {
         this.eventPublisher = eventPublisher;
     }
 
+    @Transactional(readOnly = false)
     @Override
     public Project createProject(Locale targetLanguage, byte[] sourceFile) {
         User currentUser = userService.getCurrentUser();
@@ -48,6 +51,7 @@ public class DefaultProjectService implements ProjectService {
         return Optional.ofNullable(project).orElseThrow();
     }
 
+    @Transactional
     @Override
     public void completeProject(UUID id, byte[] translatedFile) {
         Project project = projectRepository.findById(id);
