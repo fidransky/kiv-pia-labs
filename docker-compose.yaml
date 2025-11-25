@@ -10,3 +10,13 @@ services:
     ports:
       - "61616:61616"
       - "8161:8161"
+
+  mariadb:
+    image: mariadb:11
+    ports:
+      - "3306:3306"
+    environment:
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=1
+      - MARIADB_DATABASE=pia_labs
+      - MARIADB_USER=mariadb
+      - MARIADB_PASSWORD=mariadb
