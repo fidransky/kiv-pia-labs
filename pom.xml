@@ -24,6 +24,7 @@
         <module>pia-labs-ws-mcp</module>
         <module>pia-labs-typescript-client</module>
         <module>pia-labs-repository-jdbc</module>
+        <module>pia-labs-repository-jdbcclient</module>
     </modules>
 
     <properties>
