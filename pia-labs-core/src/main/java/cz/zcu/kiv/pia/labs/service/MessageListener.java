@@ -3,10 +3,11 @@ package cz.zcu.kiv.pia.labs.service;
 import cz.zcu.kiv.pia.labs.event.ProjectCompletedEvent;
 import cz.zcu.kiv.pia.labs.message.ProjectDTO;
 import org.slf4j.Logger;
-import org.springframework.context.event.EventListener;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -24,7 +25,7 @@ public class MessageListener {
         this.jmsTemplate = jmsTemplate;
     }
 
-    @EventListener(ProjectCompletedEvent.class)
+    @TransactionalEventListener(classes = ProjectCompletedEvent.class, phase = TransactionPhase.AFTER_COMMIT)
     public void onProjectCompletedEvent(ProjectCompletedEvent event) {
         LOG.info("Received event about completed project {}", event.getProject().getId());
 
