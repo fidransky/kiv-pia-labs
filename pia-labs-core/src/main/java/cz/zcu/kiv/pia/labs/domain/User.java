@@ -22,6 +22,16 @@ public class User {
     }
 
     // constructor used when referencing the full object
+    public User(UUID id, String name, String emailAddress, UserRole role, Set<Locale> languages, Instant createdAt) {
+        this.id = id;
+        this.name = name;
+        this.emailAddress = emailAddress;
+        this.role = role;
+        this.languages = languages;
+        this.createdAt = createdAt;
+    }
+
+    // constructor used when creating a new object in business logic
     private User(String name, String emailAddress, UserRole role, Set<Locale> languages) {
         this.id = UUID.randomUUID();
         this.name = name;
