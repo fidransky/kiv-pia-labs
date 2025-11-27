@@ -19,7 +19,11 @@ public class GlobalControllerAdvice {
     }
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleException(Exception ex, HttpServletRequest request) {
+    public ModelAndView handleException(Exception ex, HttpServletRequest request) throws Exception {
+        if (request.getRequestURI().startsWith("/swagger-ui")) {
+            throw ex; // let Swagger handle it
+        }
+
         ModelAndView modelAndView = new ModelAndView("error");
 
         modelAndView.addObject("message", ex.getMessage() != null ? ex.getMessage() : "An unexpected error occurred");

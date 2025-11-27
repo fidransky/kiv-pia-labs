@@ -15,10 +15,10 @@ import java.util.Locale;
 
 @RestController
 @RequestMapping(path = "/v1")
-public class ProjectController implements ProjectsApi {
+public class ProjectControllerV1 implements ProjectsApi {
     private final ProjectService projectService;
 
-    public ProjectController(ProjectService projectService) {
+    public ProjectControllerV1(ProjectService projectService) {
         this.projectService = projectService;
     }
 

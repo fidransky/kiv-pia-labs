@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/v1")
-public class HelloWorldController implements HelloApi {
+public class HelloWorldControllerV1 implements HelloApi {
     @Override
     public ResponseEntity<String> sayHello(String from) {
         var builder = new StringBuilder("Hello World");
