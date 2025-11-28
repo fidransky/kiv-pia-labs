@@ -1,5 +1,5 @@
 <!doctype html>
-<html th:lang="${#locale}" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (title, content)">
+<html th:lang="${#locale}" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="layout (title, content)">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,22 +24,32 @@
                         <a class="nav-link active" aria-current="page" th:href="@{/hello}">Hello</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" th:href="@{${request.requestURI}(from=${from})}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" th:href="@{${request.requestURI}(from=${from})}" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Language
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                             <li><a class="dropdown-item" th:href="@{${request.requestURI}(from=${from}, lang='en')}">English</a></li>
                             <li><a class="dropdown-item" th:href="@{${request.requestURI}(from=${from}, lang='es')}">Español</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_TRANSLATOR')">
+                        <a class="nav-link disabled">Only visible for translators!</a>
                     </li>
                 </ul>
-                <form method="GET" th:action="@{/hello}" class="d-flex">
+                <form method="GET" th:action="@{/hello}" class="d-flex me-2">
                     <input class="form-control me-2" type="text" name="from" th:value="${from}" placeholder="Who's greeting?" aria-label="Who's greeting?">
                     <button class="btn btn-outline-success text-nowrap" type="submit">Say hello</button>
                 </form>
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" th:href="@{/profile}" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <th:block sec:authentication="principal.name"/>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" th:href="@{/logout}">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>

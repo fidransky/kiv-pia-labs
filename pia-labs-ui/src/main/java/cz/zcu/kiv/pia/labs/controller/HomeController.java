@@ -7,6 +7,7 @@ import cz.zcu.kiv.pia.labs.domain.Project;
 import cz.zcu.kiv.pia.labs.domain.User;
 import cz.zcu.kiv.pia.labs.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
@@ -26,7 +28,12 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        var projects = projectService.getAllProjects();
+        List<Project> projects;
+        try {
+            projects = projectService.getAllProjects();
+        } catch (AccessDeniedException e) {
+            projects = Collections.emptyList();
+        }
 
         var projectVOs = projects.stream()
                 .map(HomeController::mapToProjectVO)
