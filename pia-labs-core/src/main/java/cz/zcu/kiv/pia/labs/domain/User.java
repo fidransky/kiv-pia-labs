@@ -117,7 +117,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "password";
+        return "$2a$12$o2UonTQ6TKQOsURKMRSRI.HsAwSEfqrWeEOXsPCcLtUQF0.pKzxRW";
     }
 
     @Override
