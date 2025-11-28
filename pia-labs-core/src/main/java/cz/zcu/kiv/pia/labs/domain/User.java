@@ -1,6 +1,11 @@
 package cz.zcu.kiv.pia.labs.domain;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Objects;
@@ -8,7 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 
 // NOTE: setters are intentionally not provided for the sake of encapsulation
-public class User {
+public class User implements UserDetails {
     private UUID id;
     private String name;
     private String emailAddress;
@@ -103,6 +108,21 @@ public class User {
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    @Override
+    public String getUsername() {
+        return getEmailAddress();
+    }
+
+    @Override
+    public String getPassword() {
+        return "password";
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role.toString()));
     }
     //</editor-fold>
 
