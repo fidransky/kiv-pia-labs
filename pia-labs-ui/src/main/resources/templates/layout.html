@@ -40,7 +40,7 @@
                     <input class="form-control me-2" type="text" name="from" th:value="${from}" placeholder="Who's greeting?" aria-label="Who's greeting?">
                     <button class="btn btn-outline-success text-nowrap" type="submit">Say hello</button>
                 </form>
-                <ul class="navbar-nav mb-2 mb-lg-0">
+                <ul class="navbar-nav mb-2 mb-lg-0" sec:authorize="isAuthenticated()">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" th:href="@{/profile}" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <th:block sec:authentication="principal.name"/>
