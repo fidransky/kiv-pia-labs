@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractAu
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity(debug = true)
 public class SecurityConfiguration {
@@ -20,6 +22,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/hello").permitAll()
                         .anyRequest().authenticated()
                 )
+                .oauth2Login(withDefaults())
                 .build();
     }
 }
