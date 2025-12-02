@@ -5,6 +5,7 @@ import cz.zcu.kiv.pia.labs.domain.User;
 import cz.zcu.kiv.pia.labs.event.ProjectCompletedEvent;
 import cz.zcu.kiv.pia.labs.repository.ProjectRepository;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -26,6 +27,8 @@ public class DefaultProjectService implements ProjectService {
     }
 
     @Transactional(readOnly = false)
+    @Secured("ROLE_CUSTOMER")
+    //@PreAuthorize("hasRole('CUSTOMER')")
     @Override
     public Project createProject(Locale targetLanguage, byte[] sourceFile) {
         User currentUser = userService.getCurrentUser();
@@ -37,6 +40,7 @@ public class DefaultProjectService implements ProjectService {
         return project;
     }
 
+    // TODO: check that user has ADMINISTRATOR role (i.e. authorization)
     @Override
     public List<Project> getAllProjects() {
         List<Project> projects = projectRepository.getAll();
@@ -51,6 +55,7 @@ public class DefaultProjectService implements ProjectService {
         return Optional.ofNullable(project).orElseThrow();
     }
 
+    // TODO: check that user has TRANSLATOR role (i.e. authorization)
     @Transactional
     @Override
     public void completeProject(UUID id, byte[] translatedFile) {
