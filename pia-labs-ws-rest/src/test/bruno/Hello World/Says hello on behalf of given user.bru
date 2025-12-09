@@ -1,0 +1,121 @@
+meta {
+  name: Says hello on behalf of given user
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/hello?from=Pavel
+  body: none
+  auth: inherit
+}
+
+params:query {
+  from: Pavel
+}
+
+vars:pre-request {
+  baseUrl: http://localhost:8080/v1
+}
+
+tests {
+  test('should return 200 OK', () => {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test('should return HTML content', () => {
+    expect(res.getHeader('content-type')).to.startWith('text/html');
+  });
+  
+  test('should return greeting', () => {
+    expect(res.getBody()).to.contain('Hello World from Pavel!');
+  });
+}
+
+example {
+  name: 200 Response
+  description: Successful operation
+  
+  request: {
+    url: {{baseUrl}}/hello
+    method: GET
+    mode: none
+    params:query: {
+      from: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: text/html
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: html
+      content: '''
+        Hello World from Pavel!
+      '''
+    }
+  }
+}
+
+example {
+  name: 405 Response
+  description: Not supported HTTP method.
+  
+  request: {
+    url: {{baseUrl}}/hello
+    method: GET
+    mode: none
+    params:query: {
+      from: 
+    }
+  }
+  
+  response: {
+    status: {
+      code: 405
+      text: Method Not Allowed
+    }
+  
+    body: {
+      type: text
+      content: '''
+  
+      '''
+    }
+  }
+}
+
+example {
+  name: 406 Response
+  description: Not acceptable response representation.
+  
+  request: {
+    url: {{baseUrl}}/hello
+    method: GET
+    mode: none
+    params:query: {
+      from: 
+    }
+  }
+  
+  response: {
+    status: {
+      code: 406
+      text: Not Acceptable
+    }
+  
+    body: {
+      type: text
+      content: '''
+  
+      '''
+    }
+  }
+}

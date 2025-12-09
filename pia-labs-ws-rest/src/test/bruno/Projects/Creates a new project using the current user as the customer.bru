@@ -1,0 +1,214 @@
+meta {
+  name: Creates a new project using the current user as the customer.
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/projects
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "languageCode": "DE",
+    "originalFile": ""
+  }
+}
+
+example {
+  name: 201 Response
+  description: Project was successfully created.
+  
+  request: {
+    url: {{baseUrl}}/projects
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "languageCode": "",
+        "originalFile": ""
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "id": "",
+          "languageCode": "",
+          "originalFile": "",
+          "state": "",
+          "createdAt": ""
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400 Response
+  description: Request body is not formatted correctly.
+  
+  request: {
+    url: {{baseUrl}}/projects
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "languageCode": "",
+        "originalFile": ""
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: text
+      content: '''
+  
+      '''
+    }
+  }
+}
+
+example {
+  name: 403 Response
+  description: Current user is not authorized to create projects.
+  
+  request: {
+    url: {{baseUrl}}/projects
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "languageCode": "",
+        "originalFile": ""
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 403
+      text: Forbidden
+    }
+  
+    body: {
+      type: text
+      content: '''
+  
+      '''
+    }
+  }
+}
+
+example {
+  name: 405 Response
+  description: Unsupported HTTP method.
+  
+  request: {
+    url: {{baseUrl}}/projects
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "languageCode": "",
+        "originalFile": ""
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 405
+      text: Method Not Allowed
+    }
+  
+    body: {
+      type: text
+      content: '''
+  
+      '''
+    }
+  }
+}
+
+example {
+  name: 406 Response
+  description: Not acceptable response representation.
+  
+  request: {
+    url: {{baseUrl}}/projects
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "languageCode": "",
+        "originalFile": ""
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 406
+      text: Not Acceptable
+    }
+  
+    body: {
+      type: text
+      content: '''
+  
+      '''
+    }
+  }
+}
+
+example {
+  name: 500 Response
+  description: Server error.
+  
+  request: {
+    url: {{baseUrl}}/projects
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "languageCode": "",
+        "originalFile": ""
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: text
+      content: '''
+  
+      '''
+    }
+  }
+}
